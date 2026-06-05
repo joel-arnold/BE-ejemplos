@@ -1,6 +1,8 @@
 let a = 1 + 2;
 let b;
 
+console.log(`typeof b: ${typeof b}`);
+
 if (a > 3) {
   console.log('a>3 es verdadero');
 } else {

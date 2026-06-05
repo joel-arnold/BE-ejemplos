@@ -4,13 +4,13 @@ function show(element) {
   console.log(element);
 }
 
-console.log('usando una función ya definida');
+console.log('\nusando una función ya definida');
 datos.forEach(show);
 
-console.log('creando la función');
+console.log('\ncreando la función');
 datos.forEach(function (element) {
   console.log(element);
 });
 
-console.log('arrow function');
+console.log('\narrow function');
 datos.forEach((element) => console.log(element));
