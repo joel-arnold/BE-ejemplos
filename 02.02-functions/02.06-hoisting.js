@@ -1,4 +1,5 @@
 'use strict';
+console.clear();
 
 hoisting('esto es hoisting');
 // noHoisting('esto no es hoisting'); // descomentar para ver el error

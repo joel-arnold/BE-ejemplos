@@ -1,53 +1,60 @@
-'use strict';
+"use strict";
+console.clear();
 
 // Declaración
-function sayHiDeclaration(recipient, greeting = 'Hola') {
-  if (typeof recipient === 'string') {
-    return `${greeting} ${recipient}`;
-  } else if (typeof recipient === 'object') {
-    return sayHiDeclaration(`${recipient.firstName} ${recipient.lastName}`, greeting);
+function decirHolaDeclaracion(destinatario, saludo = "Hola") {
+  if (typeof destinatario === "string") {
+    return `${saludo} ${destinatario}`;
+  } else if (typeof destinatario === "object") {
+    return decirHolaDeclaracion(`${destinatario.nombre} ${destinatario.apellido}`, saludo);
   }
 }
 
 // Expresión
-const greetExpression = function sayHiExpression(recipient, greeting = 'Hola') {
-  if (typeof recipient === 'string') {
-    return `${greeting} ${recipient}`;
-  } else if (typeof recipient === 'object') {
-    return greetExpression(`${recipient.firstName} ${recipient.lastName}`, greeting);
+const saludarExpresion = function decirHolaExpresion(destinatario, saludo = "Hola") {
+  if (typeof destinatario === "string") {
+    return `${saludo} ${destinatario}`;
+  } else if (typeof destinatario === "object") {
+    return saludarExpresion(`${destinatario.nombre} ${destinatario.apellido}`, saludo);
   }
 };
 
 // Expresión
-const greetExpression2 = function sayHiExpression2(recipient, greeting = 'Hola') {
-  if (typeof recipient === 'string') {
-    return `${greeting} ${recipient}`;
-  } else if (typeof recipient === 'object') {
-    return sayHiExpression2(`${recipient.firstName} ${recipient.lastName}`, greeting);
+const saludarExpresion2 = function decirHolaExpresion2(destinatario, saludo = "Hola") {
+  if (typeof destinatario === "string") {
+    return `${saludo} ${destinatario}`;
+  } else if (typeof destinatario === "object") {
+    return decirHolaExpresion2(`${destinatario.nombre} ${destinatario.apellido}`, saludo);
   }
 };
 
 // Expresión de función anónima
-const greetExpressionAnonymous = function (recipient, greeting = 'Hola') {
-  if (typeof recipient === 'string') {
-    return `${greeting} ${recipient}`;
-  } else if (typeof recipient === 'object') {
-    return greetExpressionAnonymous(`${recipient.firstName} ${recipient.lastName}`, greeting);
+const saludarExpresionAnonima = function (destinatario, saludo = "Hola") {
+  if (typeof destinatario === "string") {
+    return `${saludo} ${destinatario}`;
+  } else if (typeof destinatario === "object") {
+    return saludarExpresionAnonima(`${destinatario.nombre} ${destinatario.apellido}`, saludo);
   }
 };
 
-const greetArrowFunction = (recipient, greeting = 'Hola') => {
-  if (typeof recipient === 'string') {
-    return `${greeting} ${recipient}`;
-  } else if (typeof recipient === 'object') {
-    return greetArrowFunction(`${recipient.firstName} ${recipient.lastName}`, greeting);
+const saludarFuncionFlecha = (destinatario, saludo = "Hola") => {
+  if (typeof destinatario === "string") {
+    return `${saludo} ${destinatario}`;
+  } else if (typeof destinatario === "object") {
+    return saludarFuncionFlecha(`${destinatario.nombre} ${destinatario.apellido}`, saludo);
   }
 };
 
-console.log(sayHiDeclaration({ firstName: 'Juan', lastName: 'Pérez' })); // Declaración
-console.log(greetExpression({ firstName: 'Josué', lastName: 'Pérez' })); // Expresión
-console.log(greetExpression2({ firstName: 'Joaquín', lastName: 'Pérez' })); // Expresión
-console.log(greetExpressionAnonymous({ firstName: 'Juana', lastName: 'Pérez' })); // Expresión de función anónima
-console.log(greetArrowFunction({ firstName: 'Jésica', lastName: 'Pérez' })); // Arrow function
+const datos = {
+  nombre: "Juan",
+  apellido: "Gonzalez",
+};
 
-// console.log(sayHiExpression2({ firstName: 'Falla', lastName: 'AlEjecutar' })); // descomentar para ver el error
+console.log(decirHolaDeclaracion(datos));
+console.log(decirHolaDeclaracion({nombre: "Juan", apellido: "Gonzalez" })); // Declaración
+console.log(saludarExpresion({ nombre: "Josué", apellido: "Gonzalez" })); // Expresión
+console.log(saludarExpresion2({ nombre: "Joaquín", apellido: "Gonzalez" })); // Expresión
+console.log(saludarExpresionAnonima({ nombre: "Juana", apellido: "Gonzalez" })); // Expresión de función anónima
+console.log(saludarFuncionFlecha({ nombre: "Jésica", apellido: "Gonzalez" })); // Función flecha
+
+// console.log(decirHolaExpresion2({ nombre: 'Falla', apellido: 'AlEjecutar' })); // descomentá para ver el error

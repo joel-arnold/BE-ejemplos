@@ -1,13 +1,14 @@
 'use strict';
+console.clear();
 
-const greet = function sayHi(name, greeting = 'Hola') {
-  return `${greeting} ${name}`;
+const saludar = function decirHola(nombre, saludo = 'Hola') {
+  return `${saludo} ${nombre}`;
 };
 
-const anonymousGreet = function (name, greeting = 'Hola') {
-  return `${greeting} ${name}`;
+const saludoAnonimo = function (nombre, saludo = 'Hola') {
+  return `${saludo} ${nombre}`;
 };
 
-console.log(greet('Juana', 'Buen día'));
-console.log(anonymousGreet('Josué', 'Buen día'));
-// console.log(sayHi('Juana', 'Buen día')); // descomentar para ver el error: sayHi no es accesible fuera de la expresión
+console.log(saludar('Juana', 'Buen día'));
+console.log(saludoAnonimo('Josué', 'Buen día'));
+// console.log(decirHola('Juana', 'Buen día')); // descomentar para ver el error: decirHola no es accesible fuera de la expresión

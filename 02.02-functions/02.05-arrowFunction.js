@@ -1,14 +1,15 @@
 'use strict';
+console.clear();
 
-const sayHi = (name, greeting = 'Hola') => `${greeting} ${name}`;
+const saludar = (nombre, saludo = 'Hola') => `${saludo} ${nombre}`;
 
-const greetExpressionAnonymous = (recipient, greeting = 'Hola') => {
-  if (typeof recipient === 'string') {
-    return `${greeting} ${recipient}`;
-  } else if (typeof recipient === 'object') {
-    return greetExpressionAnonymous(`${recipient.firstName} ${recipient.lastName}`, greeting);
+const expresionSaludoAnonima = (destinatario, saludo = 'Hola') => {
+  if (typeof destinatario === 'string') {
+    return `${saludo} ${destinatario}`;
+  } else if (typeof destinatario === 'object') {
+    return expresionSaludoAnonima(`${destinatario.nombre} ${destinatario.apellido}`, saludo);
   }
 };
 
-console.log(sayHi('Juan', 'Buen día'));
-console.log(greetExpressionAnonymous({ firstName: 'Juana', lastName: 'Pérez' }, 'Buen día'));
+console.log(saludar('Juan', 'Buen día'));
+console.log(expresionSaludoAnonima({ nombre: 'Juana', apellido: 'Pérez' }, 'Buen día'));
