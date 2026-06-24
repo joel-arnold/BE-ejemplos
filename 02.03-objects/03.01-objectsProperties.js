@@ -1,3 +1,5 @@
+console.clear();
+
 const person = {
   firstName: 'Alguien',
   lastName: 'Aleatorio',

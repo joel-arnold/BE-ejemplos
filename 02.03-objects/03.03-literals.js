@@ -1,4 +1,5 @@
 'use strict';
+console.clear();
 
 const sam = {
   firstName: 'Sam',

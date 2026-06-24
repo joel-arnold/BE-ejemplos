@@ -1,7 +1,9 @@
+console.clear();
+
 const person = {
   firstName: 'Alguien',
   lastName: 'Aleatorio',
-  birthDate: new Date('1993-01-10'),
+  birthDate: new Date('1988-09-10'),
   getAge() {
     return Math.floor((Date.now() - this.birthDate.getTime()) / 3.15576e10);
   },
@@ -28,4 +30,4 @@ const person = {
 
 console.log(person.address.getFullAddress());
 console.log(person.getAge());
-console.log(person.getAgeToDate(new Date('2020-01-01')));
+console.log(person.getAgeToDate(new Date('2026-06-24')));
