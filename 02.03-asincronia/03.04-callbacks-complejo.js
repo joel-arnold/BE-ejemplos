@@ -8,7 +8,7 @@ console.clear();
 // y todo se resuelve con callbacks, terminamos anidando función
 // dentro de función. El código crece "hacia la derecha", se vuelve
 // difícil de leer y de manejar errores. A esto se lo llama
-// "callback hell". Las promesas (02.15) y async/await (02.16)
+// "callback hell". Las promesas (03.06) y async/await (03.07)
 // nacen justamente para resolver esto.
 function obtenerUsuario(id, callback) {
   setTimeout(() => {

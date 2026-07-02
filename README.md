@@ -8,10 +8,11 @@ El contenido va desde fundamentos de JavaScript, pasando por TypeScript, hasta A
 
 ### 02 - Fundamentos de JavaScript
 
-- `02.01-basicSyntax/`: `let`, `const`, arrays, condicionales, switch, loops, iteracion.
-- `02.02-functions/`: declaraciones y expresiones de funciones, scope, hoisting, HOF, callbacks, promesas, async/await, fetch.
-- `02.03-objects/`: propiedades, metodos, literales, prototipos, `Object.create`, constructores, herencia, factory.
-- `02.03-objects/` (continuacion): paso por comparticion (call-by-sharing) y mutabilidad (`03.10-callBySharing.js`, `03.11-alteringValues.js`).
+- `02.01-sintaxisBasica/`: `let`, `const`, arreglos, condicionales, switch, bucles, iteracion.
+- `02.02-funciones/`: declaraciones y expresiones de funciones, scope, hoisting, recursion, HOF (parametro y retorno), `forEach`.
+- `02.03-asincronia/`: ejecucion asincronica, callbacks (simple, error-first, callback hell), promisify, promesas, async/await, manejo de errores, paralelismo (`Promise.all`), `fetch`.
+- `02.04-objetos/`: propiedades, metodos, literales, prototipos, `Object.create`, constructores, herencia, factory.
+- `02.04-objetos/` (continuacion): paso por comparticion (call-by-sharing) y mutabilidad (`04.10-pasoPorComparticion.js`, `04.11-modificarValores.js`).
 - `02.06-clases/`: definicion de clases y propiedades privadas.
 
 ### 04 - TypeScript
@@ -60,7 +61,7 @@ pnpm start:dev
 Las carpetas de la serie `02.xx` no requieren instalacion. Se pueden ejecutar con Node de forma directa:
 
 ```bash
-node 02.01-basicSyntax/01.01-let.js
+node 02.01-sintaxisBasica/01.01-let.js
 ```
 
 ## APIs y pruebas rapidas

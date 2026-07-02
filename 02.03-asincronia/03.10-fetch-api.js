@@ -62,7 +62,7 @@ async function main() {
     console.log("País obtenido:");
     console.log(describirPais(argentina));
 
-    // --- Varios en PARALELO con Promise.all (ver 02.18) ---
+    // --- Varios en PARALELO con Promise.all (ver 03.09) ---
     const codigos = ["BR", "CL", "UY", "PE"];
     const paises = await Promise.all(codigos.map((c) => obtenerPais(c)));
     console.log(`\nSe obtuvieron ${paises.length} países en paralelo:\n`);
