@@ -11,7 +11,7 @@ El contenido va desde fundamentos de JavaScript, pasando por TypeScript, hasta A
 - `02.01-basicSyntax/`: `let`, `const`, arrays, condicionales, switch, loops, iteracion.
 - `02.02-functions/`: declaraciones y expresiones de funciones, scope, hoisting, HOF, callbacks, promesas, async/await, fetch.
 - `02.03-objects/`: propiedades, metodos, literales, prototipos, `Object.create`, constructores, herencia, factory.
-- `02.04-passingArguments/`: paso por comparticion (call-by-sharing) y mutabilidad.
+- `02.03-objects/` (continuacion): paso por comparticion (call-by-sharing) y mutabilidad (`03.10-callBySharing.js`, `03.11-alteringValues.js`).
 - `02.06-clases/`: definicion de clases y propiedades privadas.
 
 ### 04 - TypeScript
