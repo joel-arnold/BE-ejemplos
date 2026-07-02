@@ -98,7 +98,7 @@ const passwords = ['abc', 'miPassword123', 'contraseñademasiadalarga!!!'];
 const usernames = ['jo', 'joel_dev', 'nombre_de_usuario_muy_largo'];
 
 console.log('--- Validación de nombres ---');
-nombres.forEach(function(n) {``
+nombres.forEach(function(n) {
   console.log(`  "${n}": ${validarNombre(n)}`);
 });
 

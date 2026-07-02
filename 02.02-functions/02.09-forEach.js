@@ -1,4 +1,13 @@
 'use strict';
+console.clear();
+
+// ============================================================
+// Array.forEach() : recorrer un array con una función
+// ============================================================
+// forEach es una función de orden superior: recibe una función y
+// la ejecuta UNA VEZ por cada elemento del array, pasándole
+// (valor, índice). Sirve para hacer algo con cada elemento (acá,
+// imprimirlo). No devuelve un array nuevo (para eso está map()).
 
 const words = ['Hola a todos', 'estas son', 'funciones de orden superior'];
 

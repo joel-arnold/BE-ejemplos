@@ -1,7 +1,15 @@
 'use strict';
 console.clear();
 
-// Ejemplo de ejecución asíncrona con callbacks anidados (callback hell)
+// ============================================================
+// CALLBACK HELL (callbacks anidados)
+// ============================================================
+// Cuando cada tarea asíncrona depende del resultado de la anterior
+// y todo se resuelve con callbacks, terminamos anidando función
+// dentro de función. El código crece "hacia la derecha", se vuelve
+// difícil de leer y de manejar errores. A esto se lo llama
+// "callback hell". Las promesas (02.15) y async/await (02.16)
+// nacen justamente para resolver esto.
 function obtenerUsuario(id, callback) {
   setTimeout(() => {
     console.log("Usuario obtenido");

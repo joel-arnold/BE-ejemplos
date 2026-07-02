@@ -1,6 +1,16 @@
 'use strict';
 console.clear();
 
+// ============================================================
+// EXPRESIÓN DE FUNCIÓN (function expression)
+// ============================================================
+// Es cuando una función se ASIGNA a una variable. Puede ser:
+// - con nombre (function decirHola...): ese nombre interno SOLO
+//   es accesible dentro de la propia función (útil para recursión).
+// - anónima (function (...) { }): sin nombre propio.
+// Para usarla nos referimos al nombre de la VARIABLE (saludar),
+// no al nombre interno (decirHola).
+
 const saludar = function decirHola(nombre, saludo = 'Hola') {
   return `${saludo} ${nombre}`;
 };

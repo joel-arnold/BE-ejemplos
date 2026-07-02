@@ -1,6 +1,20 @@
 "use strict";
 console.clear();
 
+// ============================================================
+// RECURSIÓN + declaración vs expresión
+// ============================================================
+// Una función RECURSIVA es la que se llama a sí misma. Acá, si le
+// pasan un objeto {nombre, apellido}, arma un string y se vuelve a
+// llamar para saludar. El archivo muestra la MISMA idea escrita de
+// varias formas: declaración, expresión con nombre, expresión
+// anónima y función flecha.
+//
+// OJO con las expresiones con nombre: el nombre interno (por ej.
+// decirHolaExpresion2) solo es accesible DENTRO de la función.
+// Desde afuera hay que usar la variable (saludarExpresion2); por
+// eso la última línea comentada falla si se la descomenta.
+
 // Declaración
 function decirHolaDeclaracion(destinatario, saludo = "Hola") {
   if (typeof destinatario === "string") {
