@@ -1,37 +1,48 @@
 'use strict';
 console.clear();
 
-const person = {
-  firstName: 'Alguien',
-  lastName: 'Aleatorio',
-  birthDate: new Date('1988-04-17'),
-  getAge() {
-    return Math.floor((Date.now() - this.birthDate.getTime()) / 3.15576e10);
+// ============================================================
+// Métodos de los objetos
+// ============================================================
+// Un método es una propiedad cuyo valor es una función. Dentro de
+// un método, la palabra clave `this` apunta al objeto que lo llama,
+// así que puede leer las demás propiedades de ese objeto (por
+// ejemplo, calcular la edad a partir de la fecha de nacimiento).
+// También se muestra:
+// - el operador `in`, que dice si una propiedad existe en el objeto.
+// - el operador `delete`, que elimina una propiedad del objeto.
+
+const persona = {
+  nombre: 'Rosa',
+  apellido: 'Martínez',
+  fechaNacimiento: new Date('1988-04-17'),
+  calcularEdad() {
+    return Math.floor((Date.now() - this.fechaNacimiento.getTime()) / 3.15576e10);
   },
-  getAgeToDate(someDate) {
-    return Math.floor((someDate.getTime() - this.birthDate.getTime()) / 3.15576e10);
+  calcularEdadEnFecha(fecha) {
+    return Math.floor((fecha.getTime() - this.fechaNacimiento.getTime()) / 3.15576e10);
   },
-  hobbies: ['leer', 'surfear', 'programar'],
-  address: {
-    street: 'Zeballos 1341',
-    city: {
-      zip: 2000,
-      name: 'Rosario',
+  pasatiempos: ['leer', 'surfear', 'programar'],
+  direccion: {
+    calle: 'Zeballos 1341',
+    ciudad: {
+      codigoPostal: 2000,
+      nombre: 'Rosario',
     },
-    state: {
-      code: 63,
-      name: 'Provincia de Santa Fe',
+    provincia: {
+      codigo: 63,
+      nombre: 'Provincia de Santa Fe',
     },
-    country: 'Argentina',
-    getFullAddress() {
-      return `${this.street}, ${this.city.name}, ${this.state.name}, ${this.country}`;
+    pais: 'Argentina',
+    direccionCompleta() {
+      return `${this.calle}, ${this.ciudad.nombre}, ${this.provincia.nombre}, ${this.pais}`;
     },
   },
 };
 
-console.log(person.address.getFullAddress());
-console.log(person.getAge());
-console.log(person.getAgeToDate(new Date('2022-12-18')));
-console.log('address' in person);
-delete person.address;
-console.log('address' in person);
+console.log(persona.direccion.direccionCompleta());
+console.log(persona.calcularEdad());
+console.log(persona.calcularEdadEnFecha(new Date('2022-12-18')));
+console.log('direccion' in persona);
+delete persona.direccion;
+console.log('direccion' in persona);

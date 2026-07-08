@@ -1,5 +1,15 @@
+// ============================================================
+// Condicional if / else y valores truthy / falsy
+// ============================================================
+// El `if` ejecuta un bloque solo si la condición es verdadera.
+// La condición no tiene por qué ser un booleano: JS convierte
+// cualquier valor a true/false según su "veracidad":
+// - falsy (se comportan como false): 0, '', null, undefined, NaN, false.
+// - truthy (se comportan como true): casi todo lo demás.
+// Por eso una variable sin valor (undefined) entra por el `else`.
+
 let a = 1 + 2;
-let b;
+let b; // sin asignar -> undefined (falsy)
 
 console.log(`typeof b: ${typeof b}`);
 

@@ -4,12 +4,12 @@ console.clear();
 // ============================================================
 // async / await
 // ============================================================
-// async/await es "azúcar sintáctico" sobre las promesas (03.06):
+// async/await es "azúcar sintáctico" sobre las promesas (3.6):
 // - una función async SIEMPRE devuelve una promesa.
 // - await "pausa" la función hasta que la promesa termina y se
 //   queda con su valor resuelto.
-// El mismo flujo del callback hell (03.04) queda plano y legible,
-// como si fuera código sincrónico. (Manejo de errores en 03.08.)
+// El mismo flujo del callback hell (3.4) queda plano y legible,
+// como si fuera código sincrónico. (Manejo de errores en 3.8.)
 function obtenerUsuario(id) {
   return new Promise((resolve) => {
     setTimeout(() => {

@@ -10,8 +10,8 @@ console.clear();
 // "envolver" ese callback dentro de una Promise. A ese proceso
 // se le dice promisificar.
 //
-// Este archivo es el puente entre los callbacks (03.02, 03.03 y
-// 03.04) y las promesas (03.06).
+// Este archivo es el puente entre los callbacks (3.2, 3.3 y
+// 3.4) y las promesas (3.6).
 
 // ------------------------------------------------------------
 // 1) La función original, basada en callback "error-first"

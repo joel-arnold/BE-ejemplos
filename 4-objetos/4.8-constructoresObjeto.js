@@ -1,47 +1,59 @@
 'use strict';
 
-const Person = {
-  init(firstName, lastName, age) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.age = age;
-    this.greet = function () {
-      return `Hola, soy ${this.firstName} ${this.lastName}`;
+// ============================================================
+// Objetos como "moldes" con un método iniciar()
+// ============================================================
+// Otra forma de armar objetos e herencia SIN funciones
+// constructoras ni `new`: usamos objetos comunes como molde y les
+// agregamos un método `iniciar()` que carga las propiedades.
+// - Con `Object.create(molde)` creamos una instancia cuyo prototipo
+//   es el molde (así hereda sus métodos).
+// - Después llamamos a `iniciar(...)` para inicializar sus datos.
+// `Celebridad` a su vez tiene como prototipo a `Persona`, y su
+// `iniciar()` reutiliza el del padre con Persona.iniciar.call(this...).
+
+const Persona = {
+  iniciar(nombre, apellido, edad) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.edad = edad;
+    this.saludar = function () {
+      return `Hola, soy ${this.nombre} ${this.apellido}`;
     };
   },
 };
 
-const Author = {
-  __proto__: Person,
-  init(firstName, lastName, age, quote) {
-    Person.init.call(this, firstName, lastName, age);
-    this.quote = quote;
-    this.sayQuote = function () {
-      return `"${this.quote}". ${this.firstName} ${this.lastName}`;
+const Celebridad = {
+  __proto__: Persona,
+  iniciar(nombre, apellido, edad, frase) {
+    Persona.iniciar.call(this, nombre, apellido, edad);
+    this.frase = frase;
+    this.decirFrase = function () {
+      return `"${this.frase}". ${this.nombre} ${this.apellido}`;
     };
   },
 };
 
-const sam = Object.create(Person);
-sam.init('Sam', 'Clemens', 25);
+const rosa = Object.create(Persona);
+rosa.iniciar('Rosa', 'Martínez', 25);
 
-const mark = Object.create(Author);
-mark.init(
-  'Mark',
-  'Twain',
+const mirtha = Object.create(Celebridad);
+mirtha.iniciar(
+  'Mirtha',
+  'Legrand',
   25,
-  'Nunca discutas con estúpidos, te arrastrarán a su nivel y allí te ganarán por experiencia.'
+  'Como te ven, te tratan.'
 );
 
-console.log(`${sam.firstName} dice:\n${sam.greet()}`);
+console.log(`${rosa.nombre} dice:\n${rosa.saludar()}`);
 console.log();
-console.log(`${mark.firstName} saluda:\n${mark.greet()}\ny dice: ${mark.sayQuote()}`);
+console.log(`${mirtha.nombre} saluda:\n${mirtha.saludar()}\ny dice: ${mirtha.decirFrase()}`);
 console.log();
 
-console.log(`¿sam.__proto__ es Person? ${sam.__proto__ === Person}`);
-console.log(`¿Person.__proto__ es Object.prototype? ${Person.__proto__ === Object.prototype}`);
-console.log(`Person.prototype: ${Person.prototype}`);
+console.log(`¿rosa.__proto__ es Persona? ${rosa.__proto__ === Persona}`);
+console.log(`¿Persona.__proto__ es Object.prototype? ${Persona.__proto__ === Object.prototype}`);
+console.log(`Persona.prototype: ${Persona.prototype}`);
 
-console.log(`¿mark.__proto__ es Author? ${mark.__proto__ === Author}`);
-console.log(`¿mark.__proto__.__proto__ es Person? ${mark.__proto__.__proto__ === Person}`);
-console.log(`¿Author.__proto__ es Person? ${Author.__proto__ === Person}`);
+console.log(`¿mirtha.__proto__ es Celebridad? ${mirtha.__proto__ === Celebridad}`);
+console.log(`¿mirtha.__proto__.__proto__ es Persona? ${mirtha.__proto__.__proto__ === Persona}`);
+console.log(`¿Celebridad.__proto__ es Persona? ${Celebridad.__proto__ === Persona}`);

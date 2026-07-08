@@ -90,26 +90,26 @@ function crearValidadorLongitud(min, max) {
 }
 
 const validarNombre = crearValidadorLongitud(2, 50);
-const validarPassword = crearValidadorLongitud(8, 20);
-const validarUsername = crearValidadorLongitud(4, 15);
+const validarContrasena = crearValidadorLongitud(8, 20);
+const validarUsuario = crearValidadorLongitud(4, 15);
 
 const nombres = ['Al', 'Juan', 'A'];
-const passwords = ['abc', 'miPassword123', 'contraseñademasiadalarga!!!'];
-const usernames = ['jo', 'joel_dev', 'nombre_de_usuario_muy_largo'];
+const contrasenas = ['abc', 'miContrasena123', 'contraseñademasiadalarga!!!'];
+const usuarios = ['jo', 'joel_dev', 'nombre_de_usuario_muy_largo'];
 
 console.log('--- Validación de nombres ---');
 nombres.forEach(function(n) {
   console.log(`  "${n}": ${validarNombre(n)}`);
 });
 
-console.log('--- Validación de passwords ---');
-passwords.forEach(function(p) {
-  console.log(`  "${p}": ${validarPassword(p)}`);
+console.log('--- Validación de contraseñas ---');
+contrasenas.forEach(function(c) {
+  console.log(`  "${c}": ${validarContrasena(c)}`);
 });
 
-console.log('--- Validación de usernames ---');
-usernames.forEach(function(u) {
-  console.log(`  "${u}": ${validarUsername(u)}`);
+console.log('--- Validación de usuarios ---');
+usuarios.forEach(function(u) {
+  console.log(`  "${u}": ${validarUsuario(u)}`);
 });
 console.log();
 
@@ -155,7 +155,7 @@ console.log('  1. CONFIGURAR comportamiento una sola vez y reutilizarlo.');
 console.log('     crearDescuento(10) → aplicar en 100 productos distintos');
 console.log();
 console.log('  2. ESPECIALIZAR una función general.');
-console.log('     crearValidadorLongitud(8, 20) → validador para passwords');
+console.log('     crearValidadorLongitud(8, 20) → validador para contraseñas');
 console.log('     crearValidadorLongitud(2, 50) → validador para nombres');
 console.log();
 console.log('  3. ENCAPSULAR lógica que no cambia.');

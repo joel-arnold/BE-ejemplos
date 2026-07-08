@@ -1,46 +1,60 @@
 'use strict';
 console.clear();
 
-const sam = {
-  firstName: 'Sam',
-  lastName: 'Clemens',
-  age: 25,
-  greet() {
-    return `Hola, soy ${this.firstName} ${this.lastName}`;
+// ============================================================
+// Object.create()
+// ============================================================
+// `Object.create(prototipo, propiedades)` crea un objeto nuevo
+// indicando EXPLÍCITAMENTE cuál va a ser su prototipo. Es la forma
+// "canónica" de armar la herencia que en 4.4 hacíamos a mano con
+// __proto__. El segundo parámetro (opcional) define las propiedades
+// propias usando "descriptores": cada propiedad se declara como
+// { value: ... } (y admite opciones como writable, enumerable, etc.).
+// Acá `mirtha` hereda `saludar()` de `rosa`, pero define su propio
+// nombre y apellido.
+
+const rosa = {
+  nombre: 'Rosa',
+  apellido: 'Martínez',
+  edad: 25,
+  saludar() {
+    return `Hola, soy ${this.nombre} ${this.apellido}`;
   },
 };
 
-const mark = Object.create(sam, {
-  firstName: { value: 'Mark' },
-  lastName: { value: 'Twain' },
+const mirtha = Object.create(rosa, {
+  nombre: { value: 'Mirtha' },
+  apellido: { value: 'Legrand' },
 });
 
-console.log(`${sam.firstName} dice:\n${sam.greet()}`);
-console.log(`${mark.firstName} dice:\n${mark.greet()}`);
+console.log(`${rosa.nombre} dice:\n${rosa.saludar()}`);
+console.log(`${mirtha.nombre} dice:\n${mirtha.saludar()}`);
 console.log();
 
-console.log(`el prototipo de mark es: ${JSON.stringify(mark.__proto__)}`);
+console.log(`el prototipo de mirtha es: ${JSON.stringify(mirtha.__proto__)}`);
 
-console.log(sam == mark.__proto__);
+console.log(rosa == mirtha.__proto__);
 
-console.log(`el prototipo del prototipo de mark es: ${JSON.stringify(mark.__proto__.__proto__)}`);
+console.log(`el prototipo del prototipo de mirtha es: ${JSON.stringify(mirtha.__proto__.__proto__)}`);
 
 console.log(
-  `el prototipo del prototipo del prototipo del literal es: ${JSON.stringify(mark.__proto__.__proto__.__proto__)}`
+  `el prototipo del prototipo del prototipo del literal es: ${JSON.stringify(mirtha.__proto__.__proto__.__proto__)}`
 );
 
-const nonLiteralSam = Object.create(
+// También podemos crear un objeto "desde cero" (con prototipo {})
+// definiendo TODAS sus propiedades y métodos mediante descriptores.
+const rosaNoLiteral = Object.create(
   {},
   {
-    firstName: { value: 'Sam no-literal' },
-    lastName: { value: 'Clemens' },
-    age: { value: 25 },
-    greet: {
+    nombre: { value: 'Rosa no-literal' },
+    apellido: { value: 'Martínez' },
+    edad: { value: 25 },
+    saludar: {
       value: function () {
-        return `Hola, soy ${this.firstName} ${this.lastName}`;
+        return `Hola, soy ${this.nombre} ${this.apellido}`;
       },
     },
   }
 );
 
-console.log(`${nonLiteralSam.firstName} dice:\n${nonLiteralSam.greet()}`);
+console.log(`${rosaNoLiteral.nombre} dice:\n${rosaNoLiteral.saludar()}`);

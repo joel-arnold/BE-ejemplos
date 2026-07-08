@@ -1,50 +1,50 @@
-class Person {
+class Persona {
   // Instance properties (también llamados Instance fields/attributes en POO tradicional)
   // contienen datos específicos de cada objeto
-  age = 0;
+  edad = 0;
   email;
 
   // Constructor
   // método especial ejecutado al crear nuevas instancias de objetos
-  constructor(firstName, lastName) {
+  constructor(nombre, apellido) {
     // Inicialización de propiedades dentro del constructor
     // permite asignar valores recibidos por parámetro
-    this.firstName = firstName;
-    this.lastName = lastName;
+    this.nombre = nombre;
+    this.apellido = apellido;
   }
 
   // Métodos de instancia
   // contienen código que puede operar sobre los instance properties
-  getFullName() {
-    return `${this.firstName} ${this.lastName}`;
+  obtenerNombreCompleto() {
+    return `${this.nombre} ${this.apellido}`;
   }
 
-  greet() {
-    return `Hola, mi nombre es ${this.getFullName()}, tengo ${this.age} años.`;
+  saludar() {
+    return `Hola, mi nombre es ${this.obtenerNombreCompleto()}, tengo ${this.edad} años.`;
   }
 
   // Getter
   // accessor para recuperar el valor de una property
-  get fullName() {
-    return this.getFullName();
+  get nombreCompleto() {
+    return this.obtenerNombreCompleto();
   }
 
   // Setter
   // accessor para establecer el valor de una property
-  set fullName(name) {
-    const parts = name.split(' ');
-    this.firstName = parts[0];
-    this.lastName = parts[1];
+  set nombreCompleto(nombreCompleto) {
+    const partes = nombreCompleto.split(' ');
+    this.nombre = partes[0];
+    this.apellido = partes[1];
   }
 
   // Static method (también llamados métodos de clase)
   // contiene lógica perteneciente a la clase, no a cada objeto.
-  static createAnonymous() {
-    return new Person('Juan', 'Pérez');
+  static crearAnonima() {
+    return new Persona('Juan', 'Pérez');
   }
 }
 
-const sam = new Person('Sam', 'Clemens');
-sam.age = 189;
+const mirtha = new Persona('Mirtha', 'Legrand');
+mirtha.edad = 189;
 
-console.log(sam.greet()); // Hola, mi nombre es Sam Clemens, tengo 189 años.
+console.log(mirtha.saludar()); // Hola, mi nombre es Mirtha Legrand, tengo 189 años.

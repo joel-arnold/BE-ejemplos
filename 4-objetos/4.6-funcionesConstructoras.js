@@ -1,27 +1,40 @@
 'use strict';
 
-function Person(firstName, lastName, age) {
-  this.firstName = firstName;
-  this.lastName = lastName;
-  this.age = age;
+// ============================================================
+// Funciones constructoras
+// ============================================================
+// Una función constructora es una función pensada para crearse
+// con `new`. Por convención se escribe con la primera letra en
+// MAYÚSCULA (Persona). Al hacer `new Persona(...)`:
+//   1. se crea un objeto vacío,
+//   2. `this` apunta a ese objeto nuevo,
+//   3. se ejecuta el cuerpo (que le carga propiedades),
+//   4. se devuelve el objeto automáticamente.
+// Los métodos se cuelgan de `Persona.prototype` para que TODAS las
+// instancias los compartan (una sola copia, no una por objeto).
+
+function Persona(nombre, apellido, edad) {
+  this.nombre = nombre;
+  this.apellido = apellido;
+  this.edad = edad;
 }
 
-Person.prototype.greet = function () {
-  return `Hola, soy ${this.firstName} ${this.lastName}`;
+Persona.prototype.saludar = function () {
+  return `Hola, soy ${this.nombre} ${this.apellido}`;
 };
 
-const sam = new Person('Sam', 'Clemens', 25);
+const rosa = new Persona('Rosa', 'Martínez', 25);
 
-console.log(`${sam.firstName} dice:\n${sam.greet()}`);
+console.log(`${rosa.nombre} dice:\n${rosa.saludar()}`);
 console.log();
 console.log('prototipo del objeto');
-console.log(`¿sam.__proto__ es Person? ${sam.__proto__ === Person}`);
-console.log(`¿sam.__proto__ es Person.__proto__? ${sam.__proto__ === Person.__proto__}`);
-console.log(`¿sam.__proto__ es Person.prototype? ${sam.__proto__ === Person.prototype}`);
+console.log(`¿rosa.__proto__ es Persona? ${rosa.__proto__ === Persona}`);
+console.log(`¿rosa.__proto__ es Persona.__proto__? ${rosa.__proto__ === Persona.__proto__}`);
+console.log(`¿rosa.__proto__ es Persona.prototype? ${rosa.__proto__ === Persona.prototype}`);
 
 console.log();
-console.log('prototipo de Person');
-console.log(`¿Person.__proto__ es Person.prototype? ${Person.__proto__ === Person.prototype}`);
-console.log(`¿Person.__proto__ es Function.prototype? ${Person.__proto__ === Function.prototype}`);
-console.log(`¿Person.prototype es Object.prototype? ${Person.prototype === Object.prototype}`);
-console.log(`¿Person.prototype.__proto__ es Object.prototype? ${Person.prototype.__proto__ === Object.prototype}`);
+console.log('prototipo de Persona');
+console.log(`¿Persona.__proto__ es Persona.prototype? ${Persona.__proto__ === Persona.prototype}`);
+console.log(`¿Persona.__proto__ es Function.prototype? ${Persona.__proto__ === Function.prototype}`);
+console.log(`¿Persona.prototype es Object.prototype? ${Persona.prototype === Object.prototype}`);
+console.log(`¿Persona.prototype.__proto__ es Object.prototype? ${Persona.prototype.__proto__ === Object.prototype}`);

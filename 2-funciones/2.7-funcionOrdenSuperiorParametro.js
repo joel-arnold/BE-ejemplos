@@ -45,22 +45,22 @@ console.log();
 
 console.log('=== NIVEL 2: Procesar un array con diferentes operaciones ===\n');
 
-// Una función que recibe un array y una operación, y aplica esa operación
+// Una función que recibe un arreglo y una operación, y aplica esa operación
 // a cada elemento
-function procesarArray(array, operacion) {
+function procesarArreglo(arreglo, operacion) {
   const resultado = [];
-  for (let i = 0; i < array.length; i++) {
-    resultado.push(operacion(array[i]));
+  for (let i = 0; i < arreglo.length; i++) {
+    resultado.push(operacion(arreglo[i]));
   }
   return resultado;
 }
 
 const numeros = [1, 2, 3, 4, 5];
 
-console.log(`Array original: [${numeros}]`);
-console.log(`Duplicados:     [${procesarArray(numeros, duplicar)}]`);
-console.log(`Triplicados:    [${procesarArray(numeros, triplicar)}]`);
-console.log(`Al cuadrado:    [${procesarArray(numeros, alCuadrado)}]`);
+console.log(`Arreglo original: [${numeros}]`);
+console.log(`Duplicados:       [${procesarArreglo(numeros, duplicar)}]`);
+console.log(`Triplicados:      [${procesarArreglo(numeros, triplicar)}]`);
+console.log(`Al cuadrado:      [${procesarArreglo(numeros, alCuadrado)}]`);
 console.log();
 
 // ============================================================================
@@ -73,7 +73,7 @@ const temperaturas = [20, 25, 30, 15, 28];
 
 // En lugar de pasar una función predefinida, podemos pasar una función
 // anónima directamente
-const enFahrenheit = procesarArray(temperaturas, function(celsius) {
+const enFahrenheit = procesarArreglo(temperaturas, function(celsius) {
   return (celsius * 9/5) + 32;
 });
 
@@ -126,11 +126,11 @@ function procesarConFiltro(array, filtro, transformacion) {
 }
 
 const productos = [
-  { nombre: 'Laptop', precio: 1000, stock: 5 },
+  { nombre: 'Notebook', precio: 1000, stock: 5 },
   { nombre: 'Mouse', precio: 25, stock: 0 },
   { nombre: 'Teclado', precio: 75, stock: 12 },
   { nombre: 'Monitor', precio: 300, stock: 0 },
-  { nombre: 'Headset', precio: 150, stock: 3 }
+  { nombre: 'Auriculares', precio: 150, stock: 3 }
 ];
 
 // Obtener solo los productos disponibles (stock > 0) y mostrar su nombre

@@ -23,16 +23,16 @@ console.clear();
 const API = "https://api.worldbank.org/v2/es/country";
 
 async function obtenerPais(codigo) {
-  const response = await fetch(`${API}/${codigo}?format=json`);
+  const respuesta = await fetch(`${API}/${codigo}?format=json`);
 
   // 1) Errores de red / HTTP: fetch no los lanza por nosotros.
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status} al pedir el país "${codigo}"`);
+  if (!respuesta.ok) {
+    throw new Error(`HTTP ${respuesta.status} al pedir el país "${codigo}"`);
   }
 
   // 2) El Banco Mundial responde con un array de 2 posiciones:
   //    [ metadatos, [ datosDelPais ] ]
-  const [meta, paises] = await response.json();
+  const [meta, paises] = await respuesta.json();
 
   // 3) Si el código no existe, igual responde 200, pero sin el
   //    array de países y con un mensaje de error en los metadatos.
@@ -55,14 +55,14 @@ function describirPais(pais) {
   ].join("\n");
 }
 
-async function main() {
+async function principal() {
   try {
     // --- Un solo país ---
     const argentina = await obtenerPais("AR");
     console.log("País obtenido:");
     console.log(describirPais(argentina));
 
-    // --- Varios en PARALELO con Promise.all (ver 03.09) ---
+    // --- Varios en PARALELO con Promise.all (ver 3.9) ---
     const codigos = ["BR", "CL", "UY", "PE"];
     const paises = await Promise.all(codigos.map((c) => obtenerPais(c)));
     console.log(`\nSe obtuvieron ${paises.length} países en paralelo:\n`);
@@ -76,4 +76,4 @@ async function main() {
   }
 }
 
-main();
+principal();

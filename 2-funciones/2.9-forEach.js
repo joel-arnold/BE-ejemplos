@@ -9,17 +9,17 @@ console.clear();
 // (valor, índice). Sirve para hacer algo con cada elemento (acá,
 // imprimirlo). No devuelve un array nuevo (para eso está map()).
 
-const words = ['Hola a todos', 'estas son', 'funciones de orden superior'];
+const palabras = ['Hola a todos', 'estas son', 'funciones de orden superior'];
 
-const highOrderFunction = (value, index) =>
+const funcionOrdenSuperior = (valor, indice) =>
   console.log(
-    `El valor en la posición ${index + 1}° es '${value}' y el espacio en blanco es el ${
-      value.indexOf(' ') + 1
+    `El valor en la posición ${indice + 1}° es '${valor}' y el espacio en blanco es el ${
+      valor.indexOf(' ') + 1
     }° caracter de la oración`
   );
 
-words.forEach(highOrderFunction);
+palabras.forEach(funcionOrdenSuperior);
 console.log();
-words.forEach((value, index) =>
-  console.log(`El elemento ${index + 1}° tiene un espacio en blanco en la posición ${value.indexOf(' ') + 1}°`)
+palabras.forEach((valor, indice) =>
+  console.log(`El elemento ${indice + 1}° tiene un espacio en blanco en la posición ${valor.indexOf(' ') + 1}°`)
 );

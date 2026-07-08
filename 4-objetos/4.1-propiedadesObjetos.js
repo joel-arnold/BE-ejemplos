@@ -1,38 +1,51 @@
 'use strict';
 console.clear();
 
-const person = {
-  firstName: 'Alguien',
-  lastName: 'Aleatorio',
-  age: 30,
-  hobbies: ['leer', 'surfear', 'programar'],
-  address: {
-    street: 'Calle Falsa 123',
-    city: {
-      zip: 2000,
-      name: 'Rosario',
+// ============================================================
+// Propiedades de los objetos
+// ============================================================
+// Un objeto es una colección de pares clave: valor (sus
+// propiedades). Los valores pueden ser de cualquier tipo, incluso
+// otros objetos (objetos anidados). Para acceder a una propiedad
+// hay dos notaciones equivalentes:
+// - de punto:     persona.nombre
+// - de corchetes: persona['nombre']  (útil cuando la clave está
+//   en una variable o tiene caracteres especiales).
+// Además, a un objeto se le pueden agregar propiedades nuevas en
+// cualquier momento, simplemente asignándolas.
+
+const persona = {
+  nombre: 'Rosa',
+  apellido: 'Martínez',
+  edad: 30,
+  pasatiempos: ['leer', 'surfear', 'programar'],
+  direccion: {
+    calle: 'Calle Falsa 123',
+    ciudad: {
+      codigoPostal: 2000,
+      nombre: 'Rosario',
     },
-    state: {
-      code: 21,
-      name: 'Provincia de Santa Fe',
+    provincia: {
+      codigo: 21,
+      nombre: 'Provincia de Santa Fe',
     },
-    country: 'Argentina',
+    pais: 'Argentina',
   },
 };
 
 console.log('notación de punto');
-console.log(`${person.firstName} vive en ${person.address.city.name} y tiene ${person.age} años`);
+console.log(`${persona.nombre} vive en ${persona.direccion.ciudad.nombre} y tiene ${persona.edad} años`);
 
 console.log('cambiar edad');
-person.age = 31;
-console.log(`${person.firstName} vive en ${person.address.city.name} y tiene ${person.age} años`);
+persona.edad = 31;
+console.log(`${persona.nombre} vive en ${persona.direccion.ciudad.nombre} y tiene ${persona.edad} años`);
 
 console.log('notación de corchetes');
-person['age'] = 40;
-console.log(`${person['firstName']} vive en ${person['address']['city']['name']} y tiene ${person['age']} años`);
+persona['edad'] = 40;
+console.log(`${persona['nombre']} vive en ${persona['direccion']['ciudad']['nombre']} y tiene ${persona['edad']} años`);
 
 console.log('crear propiedades');
-person.job = 'programador web';
+persona.profesion = 'programadora web';
 console.log(
-  `${person['firstName']} vive en ${person['address']['city']['name']}, tiene ${person['age']} años y trabaja como ${person.job}`
+  `${persona['nombre']} vive en ${persona['direccion']['ciudad']['nombre']}, tiene ${persona['edad']} años y trabaja como ${persona.profesion}`
 );
