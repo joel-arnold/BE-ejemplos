@@ -1,9 +1,10 @@
+'use strict';
 console.clear();
 
 const person = {
   firstName: 'Alguien',
   lastName: 'Aleatorio',
-  birthDate: new Date('1988-09-10'),
+  birthDate: new Date('1988-04-17'),
   getAge() {
     return Math.floor((Date.now() - this.birthDate.getTime()) / 3.15576e10);
   },
@@ -12,16 +13,16 @@ const person = {
   },
   hobbies: ['leer', 'surfear', 'programar'],
   address: {
-    street: 'Av. Mountain view 123',
+    street: 'Zeballos 1341',
     city: {
-      zip: 816015,
-      name: 'Kunlun',
+      zip: 2000,
+      name: 'Rosario',
     },
     state: {
       code: 63,
-      name: 'Provincia de Qinghai',
+      name: 'Provincia de Santa Fe',
     },
-    country: 'China',
+    country: 'Argentina',
     getFullAddress() {
       return `${this.street}, ${this.city.name}, ${this.state.name}, ${this.country}`;
     },
@@ -30,4 +31,7 @@ const person = {
 
 console.log(person.address.getFullAddress());
 console.log(person.getAge());
-console.log(person.getAgeToDate(new Date('2026-06-24')));
+console.log(person.getAgeToDate(new Date('2022-12-18')));
+console.log('address' in person);
+delete person.address;
+console.log('address' in person);

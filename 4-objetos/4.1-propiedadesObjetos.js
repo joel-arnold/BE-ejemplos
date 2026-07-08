@@ -1,3 +1,4 @@
+'use strict';
 console.clear();
 
 const person = {
@@ -6,16 +7,16 @@ const person = {
   age: 30,
   hobbies: ['leer', 'surfear', 'programar'],
   address: {
-    street: 'Av. Mountain view 123',
+    street: 'Calle Falsa 123',
     city: {
-      zip: 816015,
-      name: 'Kunlun',
+      zip: 2000,
+      name: 'Rosario',
     },
     state: {
-      code: 63,
-      name: 'Provincia de Qinghai',
+      code: 21,
+      name: 'Provincia de Santa Fe',
     },
-    country: 'China',
+    country: 'Argentina',
   },
 };
 
@@ -31,7 +32,7 @@ person['age'] = 40;
 console.log(`${person['firstName']} vive en ${person['address']['city']['name']} y tiene ${person['age']} años`);
 
 console.log('crear propiedades');
-person.job = 'desarrollador';
+person.job = 'programador web';
 console.log(
   `${person['firstName']} vive en ${person['address']['city']['name']}, tiene ${person['age']} años y trabaja como ${person.job}`
 );
