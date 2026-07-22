@@ -1,0 +1,17 @@
+{
+  "name": "06.1-http-nativo",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Servidor HTTP con el módulo http nativo de Node (sin Express)",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "3.1.0"
+  }
+}

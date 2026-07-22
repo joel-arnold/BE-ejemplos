@@ -1,0 +1,19 @@
+### Listar usuarios
+GET http://localhost:3000/api/usuarios
+
+### Crear un usuario
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Grace",
+  "email": "grace@example.com"
+}
+
+### Datos inválidos (responde 400)
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Grace"
+}

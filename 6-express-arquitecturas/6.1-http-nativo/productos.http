@@ -1,0 +1,23 @@
+### Listar productos
+GET http://localhost:3000/api/productos
+
+### Crear un producto
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Mouse",
+  "precio": 15000
+}
+
+### Datos inválidos (responde 400)
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "precio": -5
+}
+
+### Ruta inexistente (responde 404)
+GET http://localhost:3000/api/otra-cosa
