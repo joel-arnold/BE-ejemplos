@@ -1,0 +1,42 @@
+### Listar productos
+GET http://localhost:3000/api/productos
+
+### Crear un producto
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Mouse",
+  "precio": 15000
+}
+
+### Datos inválidos (responde 400 vía middleware de errores)
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "precio": -5
+}
+
+### EL AGUJERO: el precio viene como string y entra igual
+# Toda la API está tipada de punta a punta y esto responde 201, porque
+# req.body es `any` y los tipos se borran al compilar. El mismo request contra
+# el ejemplo 7.3 (con Zod) responde 400 con el detalle del campo.
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Webcam",
+  "precio": "60000"
+}
+
+### Y este también entra: sobra una propiedad que nadie declaró
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Auriculares",
+  "precio": 45000,
+  "esGratis": true
+}

@@ -24,12 +24,20 @@ Ejemplos que acompañan la clase "Arquitecturas en APIs de Node.js". Cada carpet
 - `6-express-arquitecturas/6.4-arquitectura-feature/`: las mismas capas, organizadas por feature (dos recursos).
 - `6-express-arquitecturas/6.5-arquitectura-hexagonal/`: puertos y adaptadores (Hexagonal / Clean, versión light).
 
+### 7 - TypeScript
+
+Ejemplos que acompañan la clase "De JavaScript a TypeScript". Mismo caso mínimo (`productos`) que la unidad 6, para que se vea qué agregan los tipos y no un dominio nuevo. A diferencia de las carpetas anteriores, acá **hay paso de compilación**. Detalle y mapa a la clase en `7-typescript/README.md`.
+
+- `7-typescript/7.1-fundamentos/`: el lenguaje en cinco archivos — tipos e inferencia, funciones, objetos, clases y genéricos.
+- `7-typescript/7.2-api-capas-ts/`: el ejemplo `6.3` migrado a TypeScript, capa por capa.
+- `7-typescript/7.3-validacion-zod/`: validación en runtime con Zod y el tipo derivado del esquema (`z.infer`).
+- `7-typescript/7.4-migracion-gradual/`: un proyecto a medio migrar, con `.js` y `.ts` conviviendo.
+
 ## Pendientes
 
-Temas y unidades que se van a incorporar más adelante, junto con su material de clase/alumno. El orden tiene dos restricciones: TypeScript va antes que MikroORM (las entidades con decoradores lo requieren) y la autenticación va después de la persistencia (necesita usuarios en base).
+Temas y unidades que se van a incorporar más adelante, junto con su material de clase/alumno. El orden tiene una restricción: la autenticación va después de la persistencia (necesita usuarios en base).
 
-- `7-typescript/` — **De JS a TS**: migración a TypeScript (configuración, tipos, `tsc`) y validación con Zod. *(Reemplaza a la vieja unidad `typescriptConfig`.)*
-- `8-persistencia-mikroorm/` — **Persistencia de datos**: MikroORM con motor MySQL. Reemplaza el repository en memoria de los ejemplos `6.3` a `6.5`.
+- `8-persistencia-mikroorm/` — **Persistencia de datos**: MikroORM con motor MySQL. Reemplaza el repository en memoria de los ejemplos `6.3` a `6.5`; las entidades son clases TypeScript con decoradores.
 - `9-autenticacion/` — **Autenticación y autorización**: hash de contraseñas, JWT y middleware de auth, más CORS y variables de entorno.
 - `10-testing-jest/` — **Testing** con Jest: probar los services mockeando el repository.
 - `11-deploy/` — **Deploy**: lo mínimo y necesario para publicar la API.
@@ -38,6 +46,7 @@ Temas y unidades que se van a incorporar más adelante, junto con su material de
 
 - Node.js 18+ recomendado.
 - npm (la unidad 6 usa npm; JavaScript puro, sin paso de compilación).
+- La unidad 7 suma TypeScript: se instala por proyecto (`devDependencies`), no hace falta nada global.
 
 ## Cómo ejecutar
 
@@ -60,9 +69,26 @@ npm run dev       # con recarga automática (nodemon)
 # o bien: npm start
 ```
 
+### Unidad 7 - TypeScript (con compilación)
+
+Igual que la unidad 6, más el paso de `tsc`:
+
+```bash
+cd 7-typescript/7.2-api-capas-ts
+npm install
+
+npm run dev       # tsx ejecuta el .ts directo y recarga al guardar
+npm run check     # solo chequea tipos (tsc --noEmit)
+
+npm run build     # compila src/ -> dist/
+npm start         # corre lo compilado: node dist/app.js
+```
+
+El proyecto `7.1-fundamentos` no levanta servidor: tiene un script por archivo (`npm run tipos`, `npm run funciones`, ...).
+
 ## APIs y pruebas rápidas
 
-Los proyectos Express de la unidad 6 levantan en:
+Los proyectos Express de las unidades 6 y 7 levantan en:
 
 - `http://localhost:3000`
 

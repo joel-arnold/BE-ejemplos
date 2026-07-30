@@ -1,0 +1,23 @@
+{
+  "name": "07.1-fundamentos-typescript",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Fundamentos de TypeScript: tipos, funciones, objetos, clases y genéricos",
+  "scripts": {
+    "tipos": "tsx src/7.1.1-tiposBasicos.ts",
+    "funciones": "tsx src/7.1.2-funciones.ts",
+    "objetos": "tsx src/7.1.3-objetos.ts",
+    "clases": "tsx src/7.1.4-clases.ts",
+    "genericos": "tsx src/7.1.5-genericosYUtilityTypes.ts",
+    "build": "tsc",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "tsx": "4.7.1",
+    "typescript": "5.4.5"
+  }
+}

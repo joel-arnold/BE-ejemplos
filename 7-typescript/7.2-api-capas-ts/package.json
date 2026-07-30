@@ -1,0 +1,25 @@
+{
+  "name": "07.2-api-capas-ts",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "La API en capas del ejemplo 6.3, migrada a TypeScript",
+  "main": "dist/app.js",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "4.17.21",
+    "@types/node": "20.11.30",
+    "tsx": "4.7.1",
+    "typescript": "5.4.5"
+  }
+}

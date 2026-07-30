@@ -1,0 +1,21 @@
+{
+  "name": "07.4-migracion-gradual",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Un proyecto a medio migrar: .js y .ts conviviendo con allowJs y checkJs",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "tsx src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "tsx": "4.7.1",
+    "typescript": "5.4.5"
+  }
+}

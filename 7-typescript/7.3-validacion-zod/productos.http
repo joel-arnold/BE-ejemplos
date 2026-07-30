@@ -1,0 +1,59 @@
+### Listar productos
+GET http://localhost:3000/api/productos
+
+### Crear un producto (201)
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Mouse",
+  "precio": 15000
+}
+
+### El agujero del 7.2, ahora tapado: precio como string (400)
+# Contra el ejemplo 7.2 este mismo request responde 201 y guarda basura.
+# Acá lo corta el middleware de validación, antes de llegar al controller.
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Webcam",
+  "precio": "60000"
+}
+
+### Varios errores de una: Zod los devuelve todos, campo por campo (400)
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "precio": -5
+}
+
+### Falta una propiedad obligatoria (400)
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Monitor"
+}
+
+### Propiedades de más: Zod las descarta y guarda solo lo declarado (201)
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Auriculares",
+  "precio": 45000,
+  "esGratis": true
+}
+
+### Regla de negocio (no formato): nombre repetido -> 400 desde el service
+# Mandar dos veces seguidas. La primera responde 201; la segunda, 400.
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Parlantes",
+  "precio": 38000
+}

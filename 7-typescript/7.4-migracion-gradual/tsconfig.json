@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    // ── Configuración DE MIGRACIÓN (no es la de un proyecto nuevo) ──
+    "allowJs": true, // deja compilar los .js que todavía no migraste
+    "checkJs": true, // ...y además les chequea los tipos que declare el JSDoc
+    "strict": false, // se prende AL FINAL, no al principio
+
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"]
+}
