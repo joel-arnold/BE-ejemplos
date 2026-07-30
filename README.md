@@ -26,11 +26,13 @@ Ejemplos que acompañan la clase "Arquitecturas en APIs de Node.js". Cada carpet
 
 ## Pendientes
 
-Temas y unidades que se van a incorporar más adelante, junto con su material de clase/alumno:
+Temas y unidades que se van a incorporar más adelante, junto con su material de clase/alumno. El orden tiene dos restricciones: TypeScript va antes que MikroORM (las entidades con decoradores lo requieren) y la autenticación va después de la persistencia (necesita usuarios en base).
 
-- **De JS a TS**: migración a TypeScript (configuración, tipos, `tsc`). *(Reemplaza a la vieja unidad `typescriptConfig`.)*
-- **Persistencia de datos**: con MikroORM y motor MySQL.
-- **Testing**: con Jest.
+- `7-typescript/` — **De JS a TS**: migración a TypeScript (configuración, tipos, `tsc`) y validación con Zod. *(Reemplaza a la vieja unidad `typescriptConfig`.)*
+- `8-persistencia-mikroorm/` — **Persistencia de datos**: MikroORM con motor MySQL. Reemplaza el repository en memoria de los ejemplos `6.3` a `6.5`.
+- `9-autenticacion/` — **Autenticación y autorización**: hash de contraseñas, JWT y middleware de auth, más CORS y variables de entorno.
+- `10-testing-jest/` — **Testing** con Jest: probar los services mockeando el repository.
+- `11-deploy/` — **Deploy**: lo mínimo y necesario para publicar la API.
 
 ## Requisitos
 
