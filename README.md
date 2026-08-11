@@ -12,7 +12,9 @@ El contenido va desde fundamentos de JavaScript hasta APIs REST con Express y di
 - `2-funciones/`: declaraciones y expresiones de funciones, scope, hoisting, recursión, funciones flecha, funciones de orden superior (parámetro y retorno) y `forEach`.
 - `3-asincronía/`: ejecución asincrónica y event loop, callbacks (simple, error-first, callback hell), promisify, promesas, async/await, manejo de errores, paralelismo (`Promise.all`) y `fetch`.
 - `4-objetos/`: propiedades, métodos, literales, prototipos, `Object.create`, funciones constructoras, herencia, fábrica de objetos, paso por compartición (call-by-sharing) y mutabilidad.
-- `5-clases/`: definición de clases y propiedades privadas.
+- `5-clases/`: `class` como azúcar sobre prototipos, anatomía de una clase, getters y setters, campos privados (`#`) y miembros estáticos, herencia (`extends`/`super`) y polimorfismo, el `this` que se pierde al pasar un método como callback, composición vs. herencia y clases con JSON. Detalle y mapa a la clase en `5-clases/README.md`.
+
+A partir de la unidad 5 los ejemplos usan el mismo caso mínimo que el resto del material (`productos` con `nombre` y `precio`), en vez del `Persona` de las unidades 1 a 4.
 
 ### 6 - Express y arquitecturas de API
 
