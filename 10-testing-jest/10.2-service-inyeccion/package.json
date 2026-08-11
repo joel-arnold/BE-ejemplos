@@ -1,0 +1,24 @@
+{
+  "name": "10.2-service-inyeccion",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "El service del 9.3 con el repository inyectado: se testea sin base de datos",
+  "scripts": {
+    "start": "tsx src/main.ts",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test:cobertura": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@jest/globals": "30.4.1",
+    "@types/node": "20.11.30",
+    "jest": "30.4.2",
+    "ts-jest": "29.4.12",
+    "tsx": "4.23.8",
+    "typescript": "5.4.5"
+  }
+}

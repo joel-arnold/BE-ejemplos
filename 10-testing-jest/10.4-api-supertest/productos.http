@@ -1,0 +1,52 @@
+### La misma API de las unidades 6 a 9, probada a mano.
+### Levantala con `npm run dev` y copiá acá abajo el token que imprime al arrancar.
+###
+### El punto del ejemplo es comparar esto con `npm test`: los mismos casos, uno
+### a uno y a ojo, contra once tests que corren solos en dos segundos.
+
+@host = http://localhost:3000
+@token = PEGAR_ACA_EL_TOKEN_QUE_IMPRIME_npm_run_dev
+
+### Listar productos (público, no pide token)
+GET {{host}}/api/productos
+
+### Crear sin token -> 401
+POST {{host}}/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Yerba",
+  "precio": 3500
+}
+
+### Crear con token -> 201
+POST {{host}}/api/productos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "Yerba",
+  "precio": 3500
+}
+
+### Crear con un nombre que ya existe -> 400
+POST {{host}}/api/productos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "Mate",
+  "precio": 9999
+}
+
+### Borrar el propio (el Mate es del usuario 1) -> 204
+DELETE {{host}}/api/productos/1
+Authorization: Bearer {{token}}
+
+### Borrar el de otro (la Bombilla es del usuario 2) -> 403
+DELETE {{host}}/api/productos/2
+Authorization: Bearer {{token}}
+
+### Borrar uno que no existe -> 404
+DELETE {{host}}/api/productos/999
+Authorization: Bearer {{token}}

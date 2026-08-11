@@ -53,11 +53,19 @@ Ejemplos que acompañan la clase "Autenticación y autorización". Mismo caso m�
 - `9-autenticacion/9.3-api-auth/`: el ejemplo `8.2` con `.env`, registro, login, middleware de autenticación y autorización por rol y por dueño.
 - `9-autenticacion/9.4-cors/`: CORS desde un navegador de verdad — el error real, el preflight y cuatro formas de configurarlo.
 
+### 10 - Testing con Jest
+
+Ejemplos que acompañan la clase "Testing con Jest". Mismo caso mínimo (`productos`) que las unidades 6 a 9, ahora con la pregunta que veníamos esquivando: **¿cómo sabemos que esto anda?** Es la unidad más liviana desde la 7: **ninguno de los cuatro ejemplos necesita MySQL, `.env` ni servidor levantado**, y eso es el punto de la unidad, no una comodidad del ejemplo. Detalle y mapa a la clase en `10-testing-jest/README.md`.
+
+- `10-testing-jest/10.1-primeros-tests/`: `describe`/`it`/`expect`, AAA, `toBe` vs `toEqual`, `it.each`, y la configuración de Jest con ESM + TypeScript comentada línea por línea.
+- `10-testing-jest/10.2-service-inyeccion/`: el service del `9.3` con el repository inyectado — nueve tests sin base de datos.
+- `10-testing-jest/10.3-mock-de-modulos/`: el mismo service **sin tocar una línea**, interceptando el import con `jest.unstable_mockModule`.
+- `10-testing-jest/10.4-api-supertest/`: la API entera con requests de verdad — rutas, tokens, códigos HTTP y cobertura.
+
 ## Pendientes
 
 Temas y unidades que se van a incorporar más adelante, junto con su material de clase/alumno.
 
-- `10-testing-jest/` — **Testing** con Jest: probar los services mockeando el repository.
 - `11-deploy/` — **Deploy**: lo mínimo y necesario para publicar la API.
 
 ## Requisitos
@@ -67,6 +75,7 @@ Temas y unidades que se van a incorporar más adelante, junto con su material de
 - La unidad 7 suma TypeScript: se instala por proyecto (`devDependencies`), no hace falta nada global.
 - La unidad 8 suma **MySQL** corriendo en `localhost:3306`. Las bases se crean solas (`ensureDatabase()`); lo único que puede hacer falta es corregir usuario y contraseña en el `mikro-orm.config.ts` de cada carpeta, que asumen `root`/`root`.
 - La unidad 9 suma un **archivo `.env`** en el ejemplo `9.3` (`cp .env.example .env`): ahí las credenciales dejan de estar en el código. El `9.4` necesita además un **navegador**, porque CORS no existe fuera de él.
+- La unidad 10 **no suma nada**: ninguno de sus ejemplos necesita MySQL, `.env` ni servidor levantado. Jest se instala por proyecto, como el resto.
 
 ## Cómo ejecutar
 
@@ -144,9 +153,21 @@ npm run api      # terminal 1 - :3000
 npm run front    # terminal 2 - :5173  -> abrir en el navegador con F12
 ```
 
+### Unidad 10 - Testing (sin nada andando)
+
+```bash
+cd 10-testing-jest/10.1-primeros-tests
+npm install
+npm test
+```
+
+Los cuatro ejemplos tienen los mismos scripts: `npm test`, `npm run test:watch` (vuelve a correr al guardar), `npm run test:cobertura` y `npm run check` (solo tipos). El `10.2` suma `npm start` (el mismo service contra el repository real) y el `10.4`, `npm run dev` para levantar la API y probarla con su `.http`.
+
+Un detalle de Windows: el script de test es `node --experimental-vm-modules node_modules/jest/bin/jest.js` y no `NODE_OPTIONS=... jest`, que es lo que dice la documentación de Jest y **falla en la terminal de Windows**.
+
 ## APIs y pruebas rápidas
 
-Los proyectos Express de las unidades 6, 7, 8 y 9 levantan en:
+Los proyectos Express de las unidades 6 a 10 levantan en:
 
 - `http://localhost:3000`
 
@@ -162,5 +183,6 @@ Para probar los endpoints hay archivos `.http` en cada carpeta.
 ## Observaciones
 
 - Es un repositorio de aprendizaje progresivo: cada carpeta muestra una idea puntual.
-- La unidad 6 usa siempre el mismo caso (`productos`) para que entre un ejemplo y el siguiente se note el cambio de estructura, no el cambio de dominio. Las unidades 7, 8 y 9 siguen con ese mismo caso por la misma razón.
+- La unidad 6 usa siempre el mismo caso (`productos`) para que entre un ejemplo y el siguiente se note el cambio de estructura, no el cambio de dominio. Las unidades 7 a 10 siguen con ese mismo caso por la misma razón.
 - Los ejemplos `6.3` → `7.2` → `7.3` → `8.2` → `9.3` son el mismo proyecto en cinco etapas: capas, tipos, validación, persistencia y autenticación. Abrir dos consecutivos lado a lado es la mejor forma de ver qué agrega cada unidad.
+- La unidad 10 retoma ese mismo service para testearlo: el `10.2` y el `10.3` resuelven el mismo problema por caminos opuestos (inyectar la dependencia o interceptar el import) y también se leen mejor lado a lado.
