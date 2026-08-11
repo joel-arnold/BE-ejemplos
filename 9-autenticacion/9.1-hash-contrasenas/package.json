@@ -1,0 +1,23 @@
+{
+  "name": "09.1-hash-contrasenas",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Por qué una contraseña no se guarda ni en texto plano ni cifrada: hash, salt y cost factor con bcrypt",
+  "scripts": {
+    "plano": "tsx src/9.1.1-porQueNoTextoPlano.ts",
+    "hash": "tsx src/9.1.2-hashConBcrypt.ts",
+    "verificar": "tsx src/9.1.3-verificarYCostFactor.ts",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "tsx": "4.23.8",
+    "typescript": "5.4.5"
+  }
+}

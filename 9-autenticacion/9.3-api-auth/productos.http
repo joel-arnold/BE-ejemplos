@@ -1,0 +1,124 @@
+### ==========================================================================
+### PRODUCTOS - las tres clases de ruta, en un solo archivo
+### ==========================================================================
+### Antes de correr esto, hacé el login en auth.http (caso 4) o el de acá abajo.
+
+@host = http://localhost:3000
+
+### 0. Login para tener token
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ana@dsw.com",
+  "password": "unaClaveLarga123"
+}
+
+###
+@token = {{login.response.body.token}}
+
+### ==========================================================================
+### PÚBLICA
+### ==========================================================================
+
+### 1. Listar productos, sin token (200)
+# No todo tiene que estar protegido: el catálogo se ve sin cuenta. Fijate que
+# cada producto trae creadoPor con el id del usuario.
+GET {{host}}/api/productos
+
+### ==========================================================================
+### AUTENTICADA - hace falta estar logueado
+### ==========================================================================
+
+### 2. Crear un producto SIN token (401)
+POST {{host}}/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Teclado",
+  "precio": 25000
+}
+
+### 3. Crear con token (201)
+# El dueño NO se manda en el body: sale del token. Aunque agregues
+# "creadoPor": 99, el esquema de Zod lo descarta y el service usa el sub del
+# token. Lo que decide permisos no se le pregunta al cliente.
+#
+# Detalle de la unidad 8 que se ve acá: en esta respuesta `creadoPor` viene
+# como el objeto usuario entero, y en el listado del caso 1 viene como un
+# número. No es una inconsistencia: al crear, la entidad Usuario está cargada
+# en el identity map y el ORM la serializa completa; al listar, la relación no
+# se cargó y sale solo la FK.
+POST {{host}}/api/productos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "Teclado",
+  "precio": 25000,
+  "descripcion": "Mecánico, switches azules"
+}
+
+### 4. Otro producto, del mismo usuario (201)
+POST {{host}}/api/productos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "Mouse",
+  "precio": 15000
+}
+
+### 5. Nombre repetido: regla de negocio del service (400)
+POST {{host}}/api/productos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "Teclado",
+  "precio": 30000
+}
+
+### 6. Sin token y con body inválido (401, no 400)
+# El orden de los middlewares en la ruta es autenticar → validar. Un anónimo
+# no tiene por qué enterarse de cómo es el formato de una ruta que no puede
+# usar.
+POST {{host}}/api/productos
+Content-Type: application/json
+
+{
+  "precio": "esto no es un número"
+}
+
+### ==========================================================================
+### AUTORIZADA - además de estar logueado, tenés que poder
+### ==========================================================================
+
+### 7. Borrar un producto propio (204)
+DELETE {{host}}/api/productos/1
+Authorization: Bearer {{token}}
+
+### 8. Borrar uno que no existe (404)
+DELETE {{host}}/api/productos/9999
+Authorization: Bearer {{token}}
+
+### 9. EL CASO DEL 403 - borrar un producto ajeno
+# Para verlo hay que armar la escena:
+#   a) Registrar un segundo usuario (juan@dsw.com) en auth.http
+#   b) Loguearte como juan y crear un producto con SU token
+#   c) Volver a loguearte como ana y correr este DELETE con el id del producto
+#      de juan
+#
+# Respuesta: 403 "Solo podés borrar los productos que creaste".
+#
+# Esa regla NO está en un middleware: para evaluarla hay que ir a la base a ver
+# de quién es el producto. Vive en services/productos.service.ts.
+DELETE {{host}}/api/productos/2
+Authorization: Bearer {{token}}
+
+### 10. Un admin sí puede borrar cualquiera
+# Después de hacer el UPDATE de rol en MySQL y volver a loguearte (ver el caso
+# 12 de auth.http), este mismo DELETE sobre el producto de juan devuelve 204.
+DELETE {{host}}/api/productos/2
+Authorization: Bearer {{token}}

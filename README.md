@@ -44,11 +44,19 @@ Ejemplos que acompañan la clase "Persistencia: MikroORM + MySQL". Mismo caso m�
 - `8-persistencia-mikroorm/8.3-relaciones/`: uno a muchos, muchos a muchos, `populate` y el problema N+1.
 - `8-persistencia-mikroorm/8.4-migraciones/`: el esquema como código versionado, en vez de `schema.update()`.
 
+### 9 - Autenticación y autorización
+
+Ejemplos que acompañan la clase "Autenticación y autorización". Mismo caso mínimo (`productos`) que las unidades 6, 7 y 8, ahora con usuarios: hasta acá cualquiera podía borrar cualquier cosa. Detalle y mapa a la clase en `9-autenticacion/README.md`.
+
+- `9-autenticacion/9.1-hash-contrasenas/`: por qué texto plano, cifrado y SHA-256 fallan; salt, cost factor y `compare()` con bcrypt.
+- `9-autenticacion/9.2-jwt-anatomia/`: las tres partes de un JWT, el payload que se lee sin secret, tres intentos de falsificarlo y la expiración.
+- `9-autenticacion/9.3-api-auth/`: el ejemplo `8.2` con `.env`, registro, login, middleware de autenticación y autorización por rol y por dueño.
+- `9-autenticacion/9.4-cors/`: CORS desde un navegador de verdad — el error real, el preflight y cuatro formas de configurarlo.
+
 ## Pendientes
 
 Temas y unidades que se van a incorporar más adelante, junto con su material de clase/alumno.
 
-- `9-autenticacion/` — **Autenticación y autorización**: hash de contraseñas, JWT y middleware de auth, más CORS y variables de entorno.
 - `10-testing-jest/` — **Testing** con Jest: probar los services mockeando el repository.
 - `11-deploy/` — **Deploy**: lo mínimo y necesario para publicar la API.
 
@@ -58,6 +66,7 @@ Temas y unidades que se van a incorporar más adelante, junto con su material de
 - npm (la unidad 6 usa npm; JavaScript puro, sin paso de compilación).
 - La unidad 7 suma TypeScript: se instala por proyecto (`devDependencies`), no hace falta nada global.
 - La unidad 8 suma **MySQL** corriendo en `localhost:3306`. Las bases se crean solas (`ensureDatabase()`); lo único que puede hacer falta es corregir usuario y contraseña en el `mikro-orm.config.ts` de cada carpeta, que asumen `root`/`root`.
+- La unidad 9 suma un **archivo `.env`** en el ejemplo `9.3` (`cp .env.example .env`): ahí las credenciales dejan de estar en el código. El `9.4` necesita además un **navegador**, porque CORS no existe fuera de él.
 
 ## Cómo ejecutar
 
@@ -111,9 +120,33 @@ Los ejemplos sin servidor tienen un script por archivo: `npm run crud` y `npm ru
 
 Cada ejemplo usa su propia base para no pisarse: `dsw_persistencia` (8.1 y 8.2), `dsw_relaciones` (8.3) y `dsw_migraciones` (8.4).
 
+### Unidad 9 - Autenticación (con `.env`)
+
+Los ejemplos `9.1` y `9.2` no necesitan nada: `npm install` y a correr los scripts (`npm run plano`, `npm run anatomia`, ...).
+
+El `9.3` es el único de todo el repositorio que **no arranca sin configurar**, y es a propósito — es el tema del bloque:
+
+```bash
+cd 9-autenticacion/9.3-api-auth
+cp .env.example .env      # Windows: copy .env.example .env
+npm install
+npm run dev
+```
+
+Usa su propia base, `dsw_auth`. Si falta una variable o el secret es corto, la API no levanta y dice qué falta.
+
+El `9.4` levanta **dos servidores** y se mira en el navegador, no en un `.http`:
+
+```bash
+cd 9-autenticacion/9.4-cors
+npm install
+npm run api      # terminal 1 - :3000
+npm run front    # terminal 2 - :5173  -> abrir en el navegador con F12
+```
+
 ## APIs y pruebas rápidas
 
-Los proyectos Express de las unidades 6, 7 y 8 levantan en:
+Los proyectos Express de las unidades 6, 7, 8 y 9 levantan en:
 
 - `http://localhost:3000`
 
@@ -122,11 +155,12 @@ Rutas base:
 - `GET /api/productos`
 - `POST /api/productos`
 - `GET /api/usuarios` y `POST /api/usuarios` (solo en el ejemplo por feature, `6.4`)
+- `POST /api/auth/registro` y `POST /api/auth/login` (unidad 9)
 
 Para probar los endpoints hay archivos `.http` en cada carpeta.
 
 ## Observaciones
 
 - Es un repositorio de aprendizaje progresivo: cada carpeta muestra una idea puntual.
-- La unidad 6 usa siempre el mismo caso (`productos`) para que entre un ejemplo y el siguiente se note el cambio de estructura, no el cambio de dominio. Las unidades 7 y 8 siguen con ese mismo caso por la misma razón.
-- Los ejemplos `6.3` → `7.2` → `7.3` → `8.2` son el mismo proyecto en cuatro etapas: capas, tipos, validación y persistencia. Abrir dos consecutivos lado a lado es la mejor forma de ver qué agrega cada unidad.
+- La unidad 6 usa siempre el mismo caso (`productos`) para que entre un ejemplo y el siguiente se note el cambio de estructura, no el cambio de dominio. Las unidades 7, 8 y 9 siguen con ese mismo caso por la misma razón.
+- Los ejemplos `6.3` → `7.2` → `7.3` → `8.2` → `9.3` son el mismo proyecto en cinco etapas: capas, tipos, validación, persistencia y autenticación. Abrir dos consecutivos lado a lado es la mejor forma de ver qué agrega cada unidad.

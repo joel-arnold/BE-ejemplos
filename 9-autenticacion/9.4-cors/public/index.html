@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9.4 - CORS desde el navegador</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    background: #0d0f14; color: #e8eaf0;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    max-width: 760px; margin: 0 auto; padding: 2rem 1.2rem 4rem;
+    line-height: 1.6;
+  }
+  h1 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .sub { color: #98a0b3; font-size: 0.9rem; margin-bottom: 1.6rem; }
+  .origen { font-family: 'Consolas', monospace; color: #a99cff; }
+  button {
+    background: #1b1f2a; color: #e8eaf0; border: 1px solid #2c3245;
+    border-radius: 8px; padding: 0.6rem 1rem; font-size: 0.92rem;
+    cursor: pointer; margin: 0 0.4rem 0.5rem 0;
+  }
+  button:hover { border-color: #7c6af7; color: #a99cff; }
+  pre {
+    background: #14171f; border: 1px solid #2c3245; border-radius: 8px;
+    padding: 1rem; font-family: 'Consolas', monospace; font-size: 13px;
+    white-space: pre-wrap; word-break: break-word; min-height: 5rem;
+    margin-top: 1rem;
+  }
+  .ok { color: #3fd68c; } .err { color: #ff7b72; } .info { color: #98a0b3; }
+  .nota {
+    border-left: 3px solid #7c6af7; background: #14171f;
+    padding: 0.8rem 1rem; border-radius: 0 8px 8px 0; margin: 1.4rem 0;
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>CORS, desde el navegador</h1>
+<p class="sub">
+  Este archivo se sirve desde <span class="origen" id="origen"></span> y le pega a la API en
+  <span class="origen">http://localhost:3000</span>. Distinto puerto = <strong>distinto origen</strong>.
+</p>
+
+<div class="nota">
+  Abrí la consola del navegador (F12) <strong>antes</strong> de tocar los botones. El mensaje que
+  importa aparece ahí, no acá: <code>fetch</code> nunca se entera de por qué falló.
+</div>
+
+<button id="btn-get">1. GET /api/productos (simple)</button>
+<button id="btn-login">2. POST /api/auth/login</button>
+<button id="btn-post">3. POST /api/productos con token (preflight)</button>
+<button id="btn-limpiar">Limpiar</button>
+
+<pre id="salida"><span class="info">Esperando…</span></pre>
+
+<script>
+  const API = 'http://localhost:3000';
+  const salida = document.getElementById('salida');
+  let token = null;
+
+  document.getElementById('origen').textContent = window.location.origin;
+
+  const log = (texto, clase = 'info') => {
+    salida.innerHTML += `<span class="${clase}">${texto}</span>\n`;
+  };
+
+  // ── 1. Request SIMPLE ──
+  // Un GET sin headers raros no dispara preflight: el navegador lo manda
+  // directo. Igual, si la respuesta no trae Access-Control-Allow-Origin, no
+  // deja que el JavaScript la lea.
+  //
+  // Esto es lo que más confunde: el request SÍ LLEGÓ al servidor y el servidor
+  // SÍ CONTESTÓ. Se ve en el log de la API. Lo que el navegador bloquea es que
+  // esta página lea la respuesta.
+  document.getElementById('btn-get').onclick = async () => {
+    log('\n→ GET /api/productos');
+
+    try {
+      const res = await fetch(`${API}/api/productos`);
+      const datos = await res.json();
+      log(`✔ ${res.status} — ${datos.length} productos: ${datos.map((p) => p.nombre).join(', ')}`, 'ok');
+    } catch (error) {
+      log(`✘ ${error.message}`, 'err');
+      log('  Mirá la consola (F12): ahí está el motivo real.', 'info');
+      log('  Y mirá el log de la API: el GET llegó igual.', 'info');
+    }
+  };
+
+  // ── 2. Login ──
+  document.getElementById('btn-login').onclick = async () => {
+    log('\n→ POST /api/auth/login');
+
+    try {
+      const res = await fetch(`${API}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: 'ana@dsw.com', password: 'loquesea' }),
+      });
+
+      token = (await res.json()).token;
+      log(`✔ ${res.status} — token guardado: ${token.slice(0, 30)}…`, 'ok');
+    } catch (error) {
+      log(`✘ ${error.message}`, 'err');
+    }
+  };
+
+  // ── 3. Request con PREFLIGHT ──
+  // Este lleva Authorization, y ese header no está entre los "seguros" que el
+  // estándar permite sin preguntar. Antes de mandarlo, el navegador manda solo
+  // un OPTIONS preguntando si puede:
+  //
+  //   OPTIONS /api/productos
+  //   Origin: http://localhost:5173
+  //   Access-Control-Request-Method: POST
+  //   Access-Control-Request-Headers: authorization, content-type
+  //
+  // Si la respuesta no autoriza el header, el POST NUNCA SE MANDA. Por eso en
+  // el log de la API se ve el OPTIONS y no se ve el POST.
+  document.getElementById('btn-post').onclick = async () => {
+    if (!token) {
+      log('\n(hacé el login primero)', 'err');
+      return;
+    }
+
+    log('\n→ POST /api/productos  (con Authorization)');
+
+    try {
+      const res = await fetch(`${API}/api/productos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ nombre: `Producto ${Date.now() % 1000}`, precio: 9999 }),
+      });
+
+      const creado = await res.json();
+      log(`✔ ${res.status} — creado: ${creado.nombre}`, 'ok');
+    } catch (error) {
+      log(`✘ ${error.message}`, 'err');
+      log('  En el log de la API tiene que verse un OPTIONS y ningún POST:', 'info');
+      log('  el preflight se rechazó, así que el POST no llegó a salir.', 'info');
+    }
+  };
+
+  document.getElementById('btn-limpiar').onclick = () => {
+    salida.innerHTML = '<span class="info">Esperando…</span>\n';
+  };
+</script>
+
+</body>
+</html>

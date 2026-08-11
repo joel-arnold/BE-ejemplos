@@ -1,0 +1,24 @@
+{
+  "name": "09.2-jwt-anatomia",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Qué es un JWT por dentro: las tres partes, qué garantiza la firma y qué no, y la expiración",
+  "scripts": {
+    "anatomia": "tsx src/9.2.1-anatomiaDelToken.ts",
+    "firma": "tsx src/9.2.2-firmaYManipulacion.ts",
+    "expiracion": "tsx src/9.2.3-expiracionYClaims.ts",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "9.0.3"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "9.0.10",
+    "@types/node": "20.11.30",
+    "tsx": "4.23.8",
+    "typescript": "5.4.5"
+  }
+}

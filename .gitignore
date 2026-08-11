@@ -145,5 +145,8 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
+# Caché de metadata de MikroORM (la genera TsMorphMetadataProvider al correr)
+temp/
+
 # Otros
 .claude
