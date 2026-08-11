@@ -1,0 +1,59 @@
+### Listar productos
+GET http://localhost:3000/api/productos
+
+### Crear un producto (201)
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Mouse",
+  "precio": 15000
+}
+
+### LA PRUEBA DE LA UNIDAD: parar el servidor, volver a levantarlo y listar.
+# Contra el ejemplo 7.3 la lista vuelve al array inicial: lo creado se perdió.
+# Acá los productos siguen estando. Eso es todo lo que significa "persistencia".
+GET http://localhost:3000/api/productos
+
+### Con descripción (201)
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Monitor 27",
+  "precio": 320000,
+  "descripcion": "IPS, 144 Hz"
+}
+
+### Zod sigue trabajando: precio como string (400)
+# Sin este control, el string llegaría hasta el driver de MySQL y el error
+# sería un 500 en vez de un 400 que dice qué campo está mal.
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Webcam",
+  "precio": "60000"
+}
+
+### Nombre más largo que la columna varchar(100) (400)
+# El esquema corta en 100 porque la columna es varchar(100). Si el esquema
+# dejara pasar más, el que cortaría sería MySQL, con un error de driver.
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Teclado mecánico retroiluminado con switches azules, reposamuñecas magnético, cable trenzado desmontable y teclas de repuesto",
+  "precio": 90000
+}
+
+### Regla de negocio: nombre repetido -> 400 desde el service
+# Mandarlo dos veces. La primera responde 201; la segunda, 400.
+# El service lo detecta con un SELECT antes de insertar.
+POST http://localhost:3000/api/productos
+Content-Type: application/json
+
+{
+  "nombre": "Parlantes",
+  "precio": 38000
+}

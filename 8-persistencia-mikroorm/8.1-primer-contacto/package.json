@@ -1,0 +1,26 @@
+{
+  "name": "08.1-primer-contacto",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Primer contacto con MikroORM y MySQL: conexión, entidad, esquema y el ciclo del EntityManager",
+  "scripts": {
+    "conexion": "tsx src/8.1.1-conexionYEsquema.ts",
+    "crud": "tsx src/8.1.2-crud.ts",
+    "uow": "tsx src/8.1.3-unitOfWorkEIdentityMap.ts",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mikro-orm/core": "7.1.11",
+    "@mikro-orm/decorators": "7.1.11",
+    "@mikro-orm/mysql": "7.1.11",
+    "@mikro-orm/reflection": "7.1.11"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "tsx": "4.23.8",
+    "typescript": "5.4.5"
+  }
+}

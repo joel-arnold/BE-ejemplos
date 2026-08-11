@@ -1,0 +1,30 @@
+{
+  "name": "08.4-migraciones",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Migraciones versionadas: el cambio de esquema como código, en vez de schema.update()",
+  "scripts": {
+    "estado": "tsx src/8.4.1-estadoDeLasMigraciones.ts",
+    "orm": "mikro-orm",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mikro-orm/core": "7.1.11",
+    "@mikro-orm/decorators": "7.1.11",
+    "@mikro-orm/migrations": "7.1.11",
+    "@mikro-orm/mysql": "7.1.11",
+    "@mikro-orm/reflection": "7.1.11"
+  },
+  "devDependencies": {
+    "@mikro-orm/cli": "7.1.11",
+    "@types/node": "20.11.30",
+    "tsx": "4.23.8",
+    "typescript": "5.4.5"
+  },
+  "mikro-orm": {
+    "configPaths": ["./src/mikro-orm.config.ts"]
+  }
+}

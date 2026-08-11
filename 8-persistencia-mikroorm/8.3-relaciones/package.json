@@ -1,0 +1,26 @@
+{
+  "name": "08.3-relaciones",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Relaciones entre entidades: uno a muchos, populate, el problema N+1 y muchos a muchos",
+  "scripts": {
+    "unoamuchos": "tsx src/8.3.1-unoAMuchos.ts",
+    "populate": "tsx src/8.3.2-populateYProblemaN1.ts",
+    "muchosamuchos": "tsx src/8.3.3-muchosAMuchos.ts",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mikro-orm/core": "7.1.11",
+    "@mikro-orm/decorators": "7.1.11",
+    "@mikro-orm/mysql": "7.1.11",
+    "@mikro-orm/reflection": "7.1.11"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "tsx": "4.23.8",
+    "typescript": "5.4.5"
+  }
+}
