@@ -1,0 +1,128 @@
+### ==========================================================================
+### AUTENTICACIÓN - correr en este orden
+### ==========================================================================
+### Con la extensión REST Client de VS Code, la variable @token se llena sola
+### al correr el login: el `# @name login` de abajo le pone nombre a la
+### respuesta y después se la referencia.
+
+### Los mismos casos de la unidad 9. Lo único que cambia para probarlos contra
+### la API publicada es esta línea: se comenta la de localhost y se descomenta
+### la otra, con la URL que te haya dado la plataforma.
+###
+### Que el archivo de pruebas sirva igual en los dos lados es la señal de que
+### el deploy salió bien: es la misma API, en otra máquina.
+
+@host = http://localhost:3000
+# @host = https://dsw-api.onrender.com
+
+### 1. Registrar un usuario (201)
+# Mirá la respuesta: NO viene el passwordHash. La entidad lo tiene marcado
+# con hidden: true, así que MikroORM lo saca al serializar.
+POST {{host}}/api/auth/registro
+Content-Type: application/json
+
+{
+  "email": "ana@dsw.com",
+  "password": "unaClaveLarga123"
+}
+
+### 2. El mismo email otra vez (400)
+POST {{host}}/api/auth/registro
+Content-Type: application/json
+
+{
+  "email": "ana@dsw.com",
+  "password": "otraClaveDistinta"
+}
+
+### 3. Contraseña corta: Zod la corta antes de llegar al service (400)
+POST {{host}}/api/auth/registro
+Content-Type: application/json
+
+{
+  "email": "corta@dsw.com",
+  "password": "1234"
+}
+
+### 4. LOGIN (200) - de acá sale el token
+# @name login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ana@dsw.com",
+  "password": "unaClaveLarga123"
+}
+
+###
+@token = {{login.response.body.token}}
+
+### 5. Contraseña equivocada (401)
+# Fijate el mensaje: "Credenciales inválidas", igual que si el email no
+# existiera. Es a propósito — ver el caso 6.
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ana@dsw.com",
+  "password": "meLaOlvide"
+}
+
+### 6. Email que no existe (401)
+# MISMA respuesta que el caso 5. Si fueran distintas, cualquiera podría
+# averiguar qué emails están registrados probando de a uno.
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "noexiste@dsw.com",
+  "password": "loquesea"
+}
+
+### ==========================================================================
+### RUTAS PROTEGIDAS
+### ==========================================================================
+
+### 7. Quién soy, con token (200)
+GET {{host}}/api/auth/yo
+Authorization: Bearer {{token}}
+
+### 8. Quién soy, SIN token (401)
+GET {{host}}/api/auth/yo
+
+### 9. Con un token inventado (401)
+GET {{host}}/api/auth/yo
+Authorization: Bearer esto.no.es.un.token
+
+### 10. Con un token bien formado pero firmado con otro secret (401)
+# Este lo generó el ejemplo 9.2.2 con 'secreto-que-invente-yo'. Tiene las tres
+# partes, el payload dice rol admin y aun así no pasa: la firma no cierra.
+GET {{host}}/api/auth/yo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwicm9sIjoiYWRtaW4iLCJpYXQiOjE3ODY0Njk2NDJ9.b3AGDT1_Y8k5nHKQvBjLXvNTGVsRJRoQrCvPFsMOUCg
+
+### ==========================================================================
+### AUTORIZACIÓN POR ROL
+### ==========================================================================
+
+### 11. Listar usuarios siendo "usuario" (403)
+# El token es válido y el servidor sabe perfectamente quién sos. No alcanza.
+# 403, no 401: volver a loguearte no te va a convertir en admin.
+GET {{host}}/api/auth/usuarios
+Authorization: Bearer {{token}}
+
+### 12. Para probar el 200, hay que ser admin.
+# Los registros públicos crean siempre usuarios comunes (si no, cualquiera se
+# haría admin). Se asciende a mano, en la consola de MySQL:
+#
+#   USE dsw_deploy;
+#   UPDATE usuario SET rol = 'admin' WHERE email = 'ana@dsw.com';
+#
+# Contra la base de producción es lo mismo, conectándote con las credenciales
+# del panel del proveedor. Y ahí se nota una cosa: el rol de admin no se pide
+# por ninguna ruta de la API, se otorga a mano en la base. Es a propósito.
+#
+# OJO: hay que volver a hacer el LOGIN (caso 4). El token viejo sigue diciendo
+# "usuario" — un JWT es una foto del momento en que se emitió, no un espejo de
+# la base. Ese desfasaje es una de las contras reales del enfoque.
+GET {{host}}/api/auth/usuarios
+Authorization: Bearer {{token}}

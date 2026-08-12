@@ -1,0 +1,11 @@
+### Healthcheck — la ruta que mira la plataforma de hosting
+GET http://localhost:3000/health
+
+### Listar productos
+GET http://localhost:3000/api/productos
+
+### Uno por id
+GET http://localhost:3000/api/productos/1
+
+### Uno que no existe
+GET http://localhost:3000/api/productos/99

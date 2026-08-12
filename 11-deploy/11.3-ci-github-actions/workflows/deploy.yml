@@ -1,0 +1,80 @@
+# ============================================================================
+# DEPLOY — PUBLICAR SOLO SI LOS TESTS PASARON
+# ============================================================================
+# Este archivo va en `.github/workflows/deploy.yml`, en la raíz del repositorio.
+#
+# Render, conectado a GitHub, deploya solo en cada push a main. Eso está muy
+# bien y tiene un agujero: deploya AUNQUE los tests estén rojos. El workflow de
+# ci.yml corre en paralelo con el deploy, no antes.
+#
+# Para cerrarlo:
+#   1. En Render, Settings > Build & Deploy > Auto-Deploy: OFF.
+#   2. Copiar el Deploy Hook (una URL secreta que dispara un deploy).
+#   3. Guardarlo en GitHub como secret: Settings > Secrets and variables >
+#      Actions > New repository secret, con el nombre RENDER_DEPLOY_HOOK.
+#   4. Este workflow.
+#
+# A partir de ahí, el único camino a producción pasa por los tests.
+# ============================================================================
+
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  # ── PRIMERO: LAS MISMAS VERIFICACIONES QUE CI ─────────────────────────────
+  verificar:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 11-deploy/11.3-ci-github-actions
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: 11-deploy/11.3-ci-github-actions/package-lock.json
+
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+
+  # ── DESPUÉS: EL DEPLOY ────────────────────────────────────────────────────
+  publicar:
+    runs-on: ubuntu-latest
+
+    # ESTA es la línea que importa de todo el archivo. `needs` dice "no arranques
+    # hasta que 'verificar' haya terminado BIEN". Si un test falla, este job no
+    # corre y la versión rota se queda en GitHub sin llegar a producción.
+    #
+    # Sin esta línea los dos jobs corren en paralelo y el deploy sale igual.
+    needs: verificar
+
+    steps:
+      # El secret nunca aparece en el log: GitHub lo tapa con asteriscos si
+      # alguien intenta imprimirlo. Por eso el hook va como secret y no escrito
+      # acá — cualquiera que vea el repositorio podría dispararte deploys.
+      - name: Disparar el deploy en Render
+        run: curl --fail --silent --show-error "$RENDER_DEPLOY_HOOK"
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+
+# ============================================================================
+# LO QUE ESTE WORKFLOW NO HACE
+# ============================================================================
+# No espera a que el deploy termine ni verifica que la versión nueva ande: el
+# curl dispara el deploy y el job termina contento. Un pipeline serio sigue con
+# un "smoke test" contra la URL de producción (pegarle a /health y verificar el
+# 200) y, si falla, vuelve a la versión anterior.
+#
+# Tampoco tiene un ambiente de staging: una copia igual a producción donde se
+# prueba antes. En un TP no hace falta; en un sistema con usuarios de verdad es
+# lo primero que se agrega.
+# ============================================================================

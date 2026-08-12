@@ -1,0 +1,73 @@
+# ============================================================================
+# EL DEPLOY COMO CÓDIGO (Render Blueprint)
+# ============================================================================
+# Todo lo de este archivo se puede hacer a mano desde el panel de Render, y la
+# primera vez conviene hacerlo a mano para ver qué es cada cosa. Este archivo
+# es lo mismo escrito, versionado y revisable en un pull request.
+#
+# El argumento es el mismo que el de las migraciones de la unidad 8.4: la
+# configuración hecha a mano no deja registro de quién cambió qué ni por qué, y
+# reproducirla en otro ambiente es acordarse.
+#
+# Para usarlo: en Render, New > Blueprint, y apuntar al repositorio.
+# ============================================================================
+
+services:
+  - type: web
+    name: dsw-api
+    runtime: node
+    plan: free
+    region: oregon
+
+    # Este repositorio tiene muchos proyectos, así que hay que decirle desde
+    # dónde mirar. En el repositorio del TP, donde el proyecto está en la raíz,
+    # esta línea no va.
+    rootDir: 11-deploy/11.2-api-lista-para-produccion
+
+    # `npm ci` y no `npm install`: instala exactamente lo del package-lock.json
+    # y falla si no coincide con el package.json. En un servidor eso es lo que
+    # querés — mejor que el deploy se niegue a que instale otra versión.
+    #
+    # Sin --omit=dev, porque el build necesita TypeScript, que es devDependency.
+    buildCommand: npm ci && npm run build
+
+    startCommand: npm start
+
+    # La ruta que Render consulta para saber si la aplicación está viva. Si
+    # deja de contestar 200, reinicia la instancia.
+    healthCheckPath: /health
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      # `sync: false` significa "esta variable existe, pero su valor lo cargo a
+      # mano en el panel". Es como se declaran los secretos: queda documentado
+      # que hacen falta, sin que el valor toque el repositorio.
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_SSL_CA
+        sync: false
+
+      # generateValue le pide a Render que genere un valor aleatorio la primera
+      # vez y lo guarde. Es mejor que cualquier secret que escribas vos, y
+      # garantiza que el de producción no sea el mismo que el de tu .env.
+      - key: JWT_SECRET
+        generateValue: true
+
+      - key: JWT_EXPIRES_IN
+        value: 1h
+
+      - key: CORS_ORIGIN
+        sync: false
+
+    # PORT no se declara: Render la inyecta sola. Escribirla a mano es una de
+    # las formas de romper el deploy.

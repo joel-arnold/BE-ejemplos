@@ -150,3 +150,5 @@ temp/
 
 # Otros
 .claude
+# Snapshot que genera la CLI de MikroORM al crear migraciones (se regenera solo)
+.snapshot-*.json

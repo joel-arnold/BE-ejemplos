@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    // ── Las dos líneas que definen el build ──────────────────────────────────
+    // rootDir: dónde está el código fuente.
+    // outDir:  dónde deja el JavaScript compilado.
+    //
+    // Vienen desde la unidad 7 y hasta ahora no las usamos casi nunca, porque
+    // en desarrollo corremos con tsx y tsx no compila a disco: transpila en
+    // memoria y ejecuta. En producción no hay tsx, hay `node`, y `node` no
+    // entiende TypeScript. De ahí sale todo este archivo.
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Genera los .js.map, que hacen que un stack trace de producción apunte a
+    // la línea del .ts y no a la del .js compilado. Cuesta unos kilobytes y
+    // ahorra mucho tiempo la primera vez que algo explota en el servidor.
+    "sourceMap": true
+  },
+  "include": ["src/**/*"]
+}

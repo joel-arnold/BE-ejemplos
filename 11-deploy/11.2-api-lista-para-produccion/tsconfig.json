@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // ── LA LÍNEA QUE HACE QUE EL ORM ARRANQUE EN PRODUCCIÓN ──────────────────
+    // Esta es la trampa específica de nuestro stack, y no está en ningún
+    // tutorial de deploy porque depende de una decisión de la unidad 8.
+    //
+    // Usamos TsMorphMetadataProvider: para saber que `precio: number` es un
+    // decimal y `nombre: string` es un varchar, MikroORM LEE LOS TIPOS de los
+    // archivos de TypeScript al arrancar. En tu máquina están ahí, en src/.
+    //
+    // En el servidor corre `node dist/server.js` y en dist/ hay JavaScript, que
+    // no tiene tipos. El ORM no encuentra de dónde sacarlos y la aplicación
+    // muere al arrancar con un error que no dice "te falta un archivo", sino
+    // algo del estilo "Source file for entity Producto not found".
+    //
+    // Con `declaration: true`, tsc emite además los .d.ts —producto.entity.d.ts
+    // al lado de producto.entity.js— y ahí están los tipos que el ORM necesita.
+    // Es una línea y es la diferencia entre que arranque y que no.
+    //
+    // La alternativa, para proyectos grandes, es generar el caché de metadata
+    // en el build (`mikro-orm cache:generate --combined`) y dejar de necesitar
+    // ts-morph en producción. Anda mejor y es un paso más; para el TP, esta
+    // línea alcanza.
+    "declaration": true,
+
+    // Que un stack trace del servidor apunte a la línea del .ts y no a la del
+    // .js compilado. La primera vez que algo explota en producción se paga.
+    "sourceMap": true
+  },
+  "include": ["src/**/*"]
+}

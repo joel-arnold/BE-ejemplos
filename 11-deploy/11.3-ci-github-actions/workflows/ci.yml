@@ -1,0 +1,70 @@
+# ============================================================================
+# CI — CORRER LOS TESTS EN CADA PUSH
+# ============================================================================
+# Este archivo va en `.github/workflows/ci.yml`, EN LA RAÍZ del repositorio.
+# GitHub solo mira esa carpeta: un workflow adentro de una subcarpeta no se
+# ejecuta nunca (por eso el de este ejemplo está en `workflows/` a secas — es
+# una plantilla, no un workflow activo).
+#
+# Con esto, cada push corre los tests en una máquina limpia de GitHub y el
+# resultado queda pegado al commit: el tilde verde o la cruz roja que se ve en
+# la lista de commits y en cada pull request.
+# ============================================================================
+
+name: CI
+
+# ── CUÁNDO CORRE ────────────────────────────────────────────────────────────
+# En cada push a main y en cada pull request contra main.
+#
+# El de los pull requests es el que más rinde en un TP de equipo: la rama se
+# testea ANTES de mezclarse, y GitHub muestra el resultado en la pantalla del
+# pull request. Nadie tiene que acordarse de correr nada.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    # La máquina virtual donde corre. GitHub la crea, ejecuta los pasos y la
+    # tira. Empieza vacía cada vez, y esa es la gracia: si el proyecto necesita
+    # algo que solo está instalado en tu computadora, acá se nota.
+    runs-on: ubuntu-latest
+
+    # Si el proyecto no está en la raíz del repositorio. En el TP, borrar esto.
+    defaults:
+      run:
+        working-directory: 11-deploy/11.3-ci-github-actions
+
+    steps:
+      # 1. Traer el código del repositorio a la máquina.
+      - uses: actions/checkout@v4
+
+      # 2. Instalar Node. La misma versión que usa el servidor: si acá probás
+      #    con la 22 y producción corre la 18, los tests no están probando lo
+      #    que se va a publicar.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: 11-deploy/11.3-ci-github-actions/package-lock.json
+
+      # 3. Instalar dependencias. `npm ci` y no `npm install`: instala exacto lo
+      #    del package-lock.json y falla si no coincide con el package.json.
+      - run: npm ci
+
+      # 4. Chequear tipos. Va ANTES de los tests a propósito: es más rápido y
+      #    encuentra otra clase de problema. Acordarse de que en desarrollo
+      #    corremos con tsx, que NO chequea tipos — este paso es la única
+      #    garantía de que el proyecto todavía compila.
+      - run: npm run check
+
+      # 5. Los tests. Si alguno falla, el job falla, y el commit queda con la
+      #    cruz roja.
+      - run: npm test
+
+      # 6. El build. Que los tests pasen no garantiza que compile a dist/:
+      #    ts-jest transpila archivo por archivo y hay errores que solo aparecen
+      #    en el build completo. Mejor que falle acá que en el deploy.
+      - run: npm run build

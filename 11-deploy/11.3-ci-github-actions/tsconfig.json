@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "sourceMap": true
+  },
+
+  // Este tsconfig incluye TODO, tests adentro. Es el que usan `npm run check` y
+  // ts-jest: los tests también son código y también tienen que compilar.
+  //
+  // El build usa otro (tsconfig.build.json), que los saca. Ver el comentario
+  // de ahí — es una separación chica que evita un error silencioso.
+  "include": ["src/**/*"]
+}

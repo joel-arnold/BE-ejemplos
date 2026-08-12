@@ -1,0 +1,25 @@
+{
+  // ==========================================================================
+  // EL TSCONFIG DEL BUILD
+  // ==========================================================================
+  // Hereda todo del tsconfig.json y solo cambia una cosa: saca los tests.
+  //
+  // Sin esto, `npm run build` compila los .test.ts adentro de dist/ y los
+  // archivos de test viajan a producción. No rompen nada visible —nadie los
+  // ejecuta— pero:
+  //
+  //   - importan @jest/globals y supertest, que son devDependencies: si el
+  //     servidor instala con --omit=dev, esos módulos no están, y cualquier
+  //     cosa que cargue ese archivo explota;
+  //   - cuentan los nombres de los casos borde y las reglas del sistema a
+  //     quien tenga acceso al build.
+  //
+  // La razón por la que hacen falta DOS archivos y no un `exclude` en el
+  // tsconfig.json: ese exclude también sacaría los tests del `npm run check` y
+  // de ts-jest, y el chequeo de tipos dejaría de mirarlos justo cuando el
+  // workflow dice que los está mirando. Un paso verde que no verifica nada es
+  // peor que no tener el paso.
+  // ==========================================================================
+  "extends": "./tsconfig.json",
+  "exclude": ["src/**/*.test.ts"]
+}

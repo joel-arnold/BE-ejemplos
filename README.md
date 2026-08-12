@@ -62,11 +62,13 @@ Ejemplos que acompañan la clase "Testing con Jest". Mismo caso mínimo (`produc
 - `10-testing-jest/10.3-mock-de-modulos/`: el mismo service **sin tocar una línea**, interceptando el import con `jest.unstable_mockModule`.
 - `10-testing-jest/10.4-api-supertest/`: la API entera con requests de verdad — rutas, tokens, códigos HTTP y cobertura.
 
-## Pendientes
+### 11 - Deploy
 
-Temas y unidades que se van a incorporar más adelante, junto con su material de clase/alumno.
+Ejemplos que acompañan la clase "Deploy", la última de la materia. Mismo caso mínimo (`productos`) que las unidades 6 a 10, ahora con lo único que le faltaba a la API: **existir fuera de tu máquina**. Entre el `9.3` y el `11.2` el código de negocio no cambia ni una línea — lo que cambia es de dónde sale la configuración, cómo arranca el proceso, cómo se apaga y cómo se conecta a la base. Son **tres ejemplos y no cuatro**, a propósito: el tema es ancho pero no profundo. Detalle, guía paso a paso y mapa a la clase en `11-deploy/README.md`.
 
-- `11-deploy/` — **Deploy**: lo mínimo y necesario para publicar la API.
+- `11-deploy/11.1-build-produccion/`: de `tsx` a `dist/` — el build, qué se sube al servidor, y las tres cosas del arranque (puerto, `0.0.0.0`, `SIGTERM`) que en tu máquina daban igual.
+- `11-deploy/11.2-api-lista-para-produccion/`: la API del `9.3` pasada por el checklist de producción, con TLS contra la base gestionada, migraciones en vez de `schema.update()` y `render.yaml`.
+- `11-deploy/11.3-ci-github-actions/`: el workflow que corre `npm test` antes de publicar y se niega a subir una versión rota.
 
 ## Requisitos
 
@@ -76,6 +78,7 @@ Temas y unidades que se van a incorporar más adelante, junto con su material de
 - La unidad 8 suma **MySQL** corriendo en `localhost:3306`. Las bases se crean solas (`ensureDatabase()`); lo único que puede hacer falta es corregir usuario y contraseña en el `mikro-orm.config.ts` de cada carpeta, que asumen `root`/`root`.
 - La unidad 9 suma un **archivo `.env`** en el ejemplo `9.3` (`cp .env.example .env`): ahí las credenciales dejan de estar en el código. El `9.4` necesita además un **navegador**, porque CORS no existe fuera de él.
 - La unidad 10 **no suma nada**: ninguno de sus ejemplos necesita MySQL, `.env` ni servidor levantado. Jest se instala por proyecto, como el resto.
+- La unidad 11 tampoco suma nada para correrla local: el `11.1` y el `11.3` no necesitan ni base ni `.env`, y el `11.2` se corre igual que el `9.3` (MySQL local y `.env`, con su propia base `dsw_deploy`). Para **publicarla** de verdad hacen falta dos cuentas gratuitas, [Aiven](https://aiven.io/) y [Render](https://render.com/), y **ninguna de las dos pide tarjeta**.
 
 ## Cómo ejecutar
 
@@ -165,9 +168,24 @@ Los cuatro ejemplos tienen los mismos scripts: `npm test`, `npm run test:watch` 
 
 Un detalle de Windows: el script de test es `node --experimental-vm-modules node_modules/jest/bin/jest.js` y no `NODE_OPTIONS=... jest`, que es lo que dice la documentación de Jest y **falla en la terminal de Windows**.
 
+### Unidad 11 - Deploy
+
+```bash
+cd 11-deploy/11.1-build-produccion
+npm install
+
+npm run dev       # tsx, como veníamos
+npm run build     # tsc: src/ -> dist/
+npm start         # node dist/server.js, que es lo que corre el servidor
+```
+
+El `11.2` se corre igual que el `9.3` (`cp .env.example .env` y `npm run dev`), con su propia base `dsw_deploy`. El `11.3` es una suite de tests: `npm test`, `npm run check` y `npm run build`.
+
+La guía paso a paso para publicar la API —crear la base en Aiven, el servicio en Render, cargar las variables y leer el log cuando falla— está en `11-deploy/11.2-api-lista-para-produccion/README.md`.
+
 ## APIs y pruebas rápidas
 
-Los proyectos Express de las unidades 6 a 10 levantan en:
+Los proyectos Express de las unidades 6 a 11 levantan en:
 
 - `http://localhost:3000`
 
@@ -184,5 +202,6 @@ Para probar los endpoints hay archivos `.http` en cada carpeta.
 
 - Es un repositorio de aprendizaje progresivo: cada carpeta muestra una idea puntual.
 - La unidad 6 usa siempre el mismo caso (`productos`) para que entre un ejemplo y el siguiente se note el cambio de estructura, no el cambio de dominio. Las unidades 7 a 10 siguen con ese mismo caso por la misma razón.
-- Los ejemplos `6.3` → `7.2` → `7.3` → `8.2` → `9.3` son el mismo proyecto en cinco etapas: capas, tipos, validación, persistencia y autenticación. Abrir dos consecutivos lado a lado es la mejor forma de ver qué agrega cada unidad.
+- Los ejemplos `6.3` → `7.2` → `7.3` → `8.2` → `9.3` → `11.2` son el mismo proyecto en seis etapas: capas, tipos, validación, persistencia, autenticación y producción. Abrir dos consecutivos lado a lado es la mejor forma de ver qué agrega cada unidad.
 - La unidad 10 retoma ese mismo service para testearlo: el `10.2` y el `10.3` resuelven el mismo problema por caminos opuestos (inyectar la dependencia o interceptar el import) y también se leen mejor lado a lado.
+- El par `9.3` / `11.2` es el que más sorprende: los `services/`, `controllers/`, `entities/` y `schemas/` son **idénticos**. Todo lo que cambia para poder deployar está afuera del negocio.
