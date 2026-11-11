@@ -19,7 +19,7 @@ export class Migration20260801100000 extends Migration {
   override up(): void | Promise<void> {
     this.addSql(
       'create table `producto` (`id` int unsigned not null auto_increment primary key, ' +
-        '`nombre` varchar(100) not null, `precio` int not null, ' +
+        '`nombre` varchar(100) not null, `precio` decimal(10,2) not null, ' +
         '`descripcion` varchar(255) null, `creado_en` datetime not null) ' +
         'default character set utf8mb4 engine = InnoDB;',
     );

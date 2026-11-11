@@ -46,7 +46,7 @@ Cada uno está comentado en su archivo, con el motivo.
 
 ### El 7, que es el específico de nuestro stack
 
-Este no está en ningún tutorial de deploy porque es consecuencia de una decisión de la unidad 8. Usamos `TsMorphMetadataProvider`: para saber que `precio: number` es un decimal, MikroORM **lee los tipos de los archivos TypeScript** al arrancar. En el servidor corre `node dist/server.js`, y en `dist/` hay JavaScript, que no tiene tipos.
+Este no está en ningún tutorial de deploy porque es consecuencia de una decisión de la unidad 8. Usamos `TsMorphMetadataProvider`: para saber que `nombre: string` es un varchar y que `precio`, que en la base es un decimal, tiene que volver como `number` y no como texto, MikroORM **lee los tipos de los archivos TypeScript** al arrancar. En el servidor corre `node dist/server.js`, y en `dist/` hay JavaScript, que no tiene tipos.
 
 Sin `"declaration": true`, la aplicación muere al arrancar:
 

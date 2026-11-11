@@ -19,7 +19,10 @@ export class Producto {
   @Property({ length: 100, unique: true })
   nombre!: string;
 
-  @Property()
+  // En el 8.1 `precio` quedó `int` porque nadie eligió otra cosa, y para plata
+  // eso pierde los centavos. Acá lo elegimos: decimal(10,2). Al leerlo vuelve
+  // como `number` (no como texto) porque el ORM lee el tipo de TypeScript.
+  @Property({ columnType: 'decimal(10,2)' })
   precio!: number;
 
   @Property({ nullable: true })

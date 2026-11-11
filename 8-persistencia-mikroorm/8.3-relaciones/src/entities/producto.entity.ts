@@ -11,7 +11,7 @@ export class Producto {
   @Property({ length: 100 })
   nombre!: string;
 
-  @Property()
+  @Property({ columnType: 'decimal(10,2)' })
   precio!: number;
 
   // ── El lado DUEÑO de la relación ──

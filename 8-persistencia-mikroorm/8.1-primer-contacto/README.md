@@ -54,4 +54,4 @@ Usamos la segunda. La alternativa sin paquetes extra es declarar el tipo en cada
 
 - `findOneOrFail` lanza `NotFoundError` en lugar de devolver `null`: encaja directo con el `errorHandler` centralizado de la unidad 6 traduciéndolo a un 404.
 - `em.count()` cuenta sin traer las filas; `em.findAndCount()` devuelve página y total de una, que es lo que necesita cualquier listado paginado.
-- `precio` quedó como `int` porque nadie eligió otra cosa. Para plata conviene `@Property({ columnType: 'decimal(10,2)' })`: el ORM elige por vos cuando no elegís vos.
+- `precio` quedó como `int` porque nadie eligió otra cosa. Para plata conviene `@Property({ columnType: 'decimal(10,2)' })`: el ORM elige por vos cuando no elegís vos. Acá queda así a propósito, para que se vea; desde el 8.2 en adelante la entidad ya trae el `decimal(10,2)`.

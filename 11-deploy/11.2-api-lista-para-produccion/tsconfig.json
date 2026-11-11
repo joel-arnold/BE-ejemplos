@@ -14,9 +14,10 @@
     // Esta es la trampa específica de nuestro stack, y no está en ningún
     // tutorial de deploy porque depende de una decisión de la unidad 8.
     //
-    // Usamos TsMorphMetadataProvider: para saber que `precio: number` es un
-    // decimal y `nombre: string` es un varchar, MikroORM LEE LOS TIPOS de los
-    // archivos de TypeScript al arrancar. En tu máquina están ahí, en src/.
+    // Usamos TsMorphMetadataProvider: para saber que `nombre: string` es un
+    // varchar y que `precio` (un decimal en la base) tiene que volver como
+    // `number` y no como texto, MikroORM LEE LOS TIPOS de los archivos de
+    // TypeScript al arrancar. En tu máquina están ahí, en src/.
     //
     // En el servidor corre `node dist/server.js` y en dist/ hay JavaScript, que
     // no tiene tipos. El ORM no encuentra de dónde sacarlos y la aplicación

@@ -60,7 +60,8 @@ console.log(ddl);
 //   - `precio` quedó como `int`. Nadie lo decidió: es el default para `number`.
 //     Para plata eso es una mala idea (no hay centavos). Se arregla pidiendo el
 //     tipo de columna: @Property({ columnType: 'decimal(10,2)' }).
-//     El ORM elige por vos cuando no elegís vos.
+//     El ORM elige por vos cuando no elegís vos. (Acá lo dejamos `int` a
+//     propósito; desde el 8.2 la entidad ya viene con el decimal.)
 
 // ============================================================================
 // NIVEL 3: Aplicar el esquema

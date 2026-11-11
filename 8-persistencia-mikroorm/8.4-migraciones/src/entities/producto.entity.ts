@@ -9,7 +9,7 @@ export class Producto {
   @Property({ length: 100, unique: true })
   nombre!: string;
 
-  @Property()
+  @Property({ columnType: 'decimal(10,2)' })
   precio!: number;
 
   @Property({ nullable: true })

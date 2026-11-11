@@ -25,7 +25,7 @@ export class Migration20260811235922 extends Migration {
     this.addSql(`create table \`usuario\` (\`id\` int unsigned not null auto_increment primary key, \`email\` varchar(120) not null, \`password_hash\` varchar(60) not null, \`rol\` varchar(20) not null default 'usuario', \`creado_en\` datetime not null) default character set utf8mb4 engine = InnoDB;`);
     this.addSql(`alter table \`usuario\` add unique \`usuario_email_unique\` (\`email\`);`);
 
-    this.addSql(`create table \`producto\` (\`id\` int unsigned not null auto_increment primary key, \`nombre\` varchar(100) not null, \`precio\` int not null, \`descripcion\` varchar(255) null, \`creado_por_id\` int unsigned not null, \`creado_en\` datetime not null) default character set utf8mb4 engine = InnoDB;`);
+    this.addSql(`create table \`producto\` (\`id\` int unsigned not null auto_increment primary key, \`nombre\` varchar(100) not null, \`precio\` decimal(10,2) not null, \`descripcion\` varchar(255) null, \`creado_por_id\` int unsigned not null, \`creado_en\` datetime not null) default character set utf8mb4 engine = InnoDB;`);
     this.addSql(`alter table \`producto\` add unique \`producto_nombre_unique\` (\`nombre\`);`);
     this.addSql(`alter table \`producto\` add index \`producto_creado_por_id_index\` (\`creado_por_id\`);`);
 
